@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TowersOfHanoi", "TowersOfHanoi\TowersOfHanoi.vcxproj", "{1449E0F0-E0AD-46F1-B1E4-F45D4863D65B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "8Queens", "8Queens\8Queens.vcxproj", "{AE598924-99E5-4FD0-BB66-A172D20D1215}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -15,6 +17,10 @@ Global
 		{1449E0F0-E0AD-46F1-B1E4-F45D4863D65B}.Debug|Win32.Build.0 = Debug|Win32
 		{1449E0F0-E0AD-46F1-B1E4-F45D4863D65B}.Release|Win32.ActiveCfg = Release|Win32
 		{1449E0F0-E0AD-46F1-B1E4-F45D4863D65B}.Release|Win32.Build.0 = Release|Win32
+		{AE598924-99E5-4FD0-BB66-A172D20D1215}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AE598924-99E5-4FD0-BB66-A172D20D1215}.Debug|Win32.Build.0 = Debug|Win32
+		{AE598924-99E5-4FD0-BB66-A172D20D1215}.Release|Win32.ActiveCfg = Release|Win32
+		{AE598924-99E5-4FD0-BB66-A172D20D1215}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
