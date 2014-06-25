@@ -48,7 +48,7 @@ void NQueens(int currQueen /* current queen */, int columns /* number of columns
 }
 
 
-// Prints all possible solutions to the 8 queen problem.
+// Prints all possible solutions to the 8 queen problem.  There are only 92 possible solutions to 8 queen.
 int main()
 {
 	int n;
