@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TowersOfHanoi", "TowersOfHa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "8Queens", "8Queens\8Queens.vcxproj", "{AE598924-99E5-4FD0-BB66-A172D20D1215}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CircularList", "CircularList\CircularList.vcxproj", "{B77F4EA9-28B7-4AE3-BEF3-4810ABB54E7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +23,10 @@ Global
 		{AE598924-99E5-4FD0-BB66-A172D20D1215}.Debug|Win32.Build.0 = Debug|Win32
 		{AE598924-99E5-4FD0-BB66-A172D20D1215}.Release|Win32.ActiveCfg = Release|Win32
 		{AE598924-99E5-4FD0-BB66-A172D20D1215}.Release|Win32.Build.0 = Release|Win32
+		{B77F4EA9-28B7-4AE3-BEF3-4810ABB54E7F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B77F4EA9-28B7-4AE3-BEF3-4810ABB54E7F}.Debug|Win32.Build.0 = Debug|Win32
+		{B77F4EA9-28B7-4AE3-BEF3-4810ABB54E7F}.Release|Win32.ActiveCfg = Release|Win32
+		{B77F4EA9-28B7-4AE3-BEF3-4810ABB54E7F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
