@@ -2,17 +2,14 @@
 
 
 /*
-BackTracking algorithm.
-worst case is 64
+depth first BackTracking algorithm: gets rid of invalid subtrees and backs up.
+worst case (brute force) is 64
                 C
 				  8    combinations as each queen can be placed in any of the 64 positions.
 
-
-
-
 */
 
-int * X; //solution array X[row]=col. Each value in the array is the column number of the ith row Queen. eg. X[4] = 5 is Queen at (4,5).
+int * Queens; //solution array Queens[row]=col. Each value in the array is the column number of the ith row Queen. eg. Queens[4] = 5 is Queen at (4,5).
 int solutionCount;
 
 void DisplaySolution(int columns)
@@ -20,7 +17,7 @@ void DisplaySolution(int columns)
 	printf("\n Solution %d : ", ++solutionCount);
 	for (int i = 1; i <= columns; i++)
 	{
-		printf("%i ", X[i]);
+		printf("%i ", Queens[i]);
 	}
 	printf("\n");
 }
@@ -49,8 +46,8 @@ bool CanPlaceQueen(int currQueen, int column)
 {
 	for (int i = 1; i <= currQueen - 1; i++)
 	{
-		if (X[i] == column   //another queen already has this column
-			|| (abs(i - currQueen) == abs(X[i] - column))      //this is on the diagonal path of another queen.
+		if (Queens[i] == column   //another queen already has this column
+			|| (abs(i - currQueen) == abs(Queens[i] - column))      //this is on the diagonal path of another queen.
 			)
 		{
 			return false;
@@ -66,7 +63,7 @@ void NQueens(int currQueen /* current queen */, int columns /* number of columns
 	{
 		if (CanPlaceQueen(currQueen, column))
 		{
-			X[currQueen] = column;
+			Queens[currQueen] = column;
 			if (currQueen == columns)
 			{
 				DisplaySolution(columns);
@@ -87,7 +84,7 @@ int main()
 	printf("Enter the number of queens/columns: ");
 	scanf_s("%d", &n);
 
-	X = new int[n + 1]; //to keep it 1-based instead of 0 based, which makes it easier to read.
+	Queens = new int[n + 1]; //to keep it 1-based instead of 0 based, which makes it easier to read.
 
 	NQueens(1 , n); //always start with queen on row 1. 
 

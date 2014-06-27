@@ -6,7 +6,7 @@
 Replace a char with a multi-character inside a string in place 
 eg. replace '.' with '::' eg. "A.B.C" to "A::B::C"
 
-Trick: count number of dots till the end and calculate based on that where the last character will eventually end up in the buffer. 
+Hint: count number of dots till the end and calculate based on that where the last character will eventually end up in the buffer. 
 Then start backwards down to 0, putting characters where they eventually will end up based on preceding dots, and  keep replacing dots with :: as you go.
 
 */
