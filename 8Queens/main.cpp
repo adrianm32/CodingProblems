@@ -1,5 +1,17 @@
 #include <iostream>
 
+
+/*
+BackTracking algorithm.
+worst case is 64
+                C
+				  8    combinations as each queen can be placed in any of the 64 positions.
+
+
+
+
+*/
+
 int * X; //solution array X[row]=col. Each value in the array is the column number of the ith row Queen. eg. X[4] = 5 is Queen at (4,5).
 int solutionCount;
 
@@ -13,6 +25,26 @@ void DisplaySolution(int columns)
 	printf("\n");
 }
 
+
+/*
+check for diagonal:
+
+if Q is on (row, col) = (3,4)   then diagonals are along (1,2) (2,3),(4,5) etc. on one diagonal and (4,3)(2,5)(1,6) etc. on other diagonal.
+i.e.    difference of 1 between row/col on one diagonal, |3-4|=|1-2|=|2-3|
+and sum of 7 on the other diagonal , 3+4=4+3=2+5
+
+in other words   if we have (i,j) and (m,n), then
+|i-j| = |m-n|  and
+i + j = m + n
+
+reaaranging above two, we get
+i - m = j - n
+i - m = n - j
+
+in other words | i - m | = | j - n|
+
+
+*/
 bool CanPlaceQueen(int currQueen, int column)
 {
 	for (int i = 1; i <= currQueen - 1; i++)

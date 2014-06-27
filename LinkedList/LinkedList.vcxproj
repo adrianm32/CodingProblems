@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9028368D-1272-4F64-9504-9A50506392F0}</ProjectGuid>
-    <RootNamespace>BST</RootNamespace>
+    <ProjectGuid>{4713386C-4B8E-4A4E-A41E-58B0AC4B5A70}</ProjectGuid>
+    <RootNamespace>LinkedList</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
