@@ -6,10 +6,7 @@ typedef struct NODE
 	int value;
 	NODE *  next = nullptr;
 
-	NODE(int val)
-	{
-		value = val;
-	}
+	NODE(int val) : value(val)  {}   //initialization list instead of initializing inside of ctor ,saves double initialization.
 } NODEITEM;
 
 
