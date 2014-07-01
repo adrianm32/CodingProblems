@@ -120,6 +120,65 @@ private:
 		return IsBSTImpl(node->Left, minValue, node->Value)   // the left subtree has a max limit
 			&& IsBSTImpl(node->Right, node->Value, maxValue);   //right subtree has min limit
 	}
+
+	NODE<T>* FindMin(NODE<T> * node)
+	{
+		while (node->Left)
+		{
+			node = node->Left;
+		}
+		return node;
+	}
+
+	void DeleteItemImpl(_Inout_ NODE<T> ** node, T item)
+	{
+		if (*node == nullptr) return;
+
+		if (item < (*node)->Value)
+			DeleteItemImpl(&(*node)->Left, item);
+		else if (item >(*node)->Value)
+			DeleteItemImpl(&(*node)->Right, item);
+		else  
+		{
+			//found node to delete
+
+			if ((*node)->Left && (*node)->Right)
+			{
+				//find min in right subtree or find max in left subtree.
+				NODE<T>* minNodeInRightSubtree = FindMin((*node)->Right);
+
+				//Replace values 
+				(*node)->Value = minNodeInRightSubtree->Value;
+				
+				//now delete the min node from the right subtree
+				DeleteItemImpl(&(*node)->Right, minNodeInRightSubtree->Value);
+			}
+			else 
+			{
+				NODE<T> * temp = *node;
+				if ((*node)->Left)
+				{
+					//only left child. replace with left child.
+					*node = (*node)->Left;
+					delete(temp);
+					temp = nullptr;
+				}
+				else if ((*node)->Right)
+				{
+					//only right child then replace with right child.
+					*node = (*node)->Right;
+					delete(temp);
+					temp = nullptr;
+				}
+				else
+				{
+					// no children , delete node itself and set to null.
+					delete (*node);
+					*node = nullptr;
+				}
+			}
+		}
+	}
 	
 
 public:
@@ -146,7 +205,11 @@ public:
 		DeleteTreeImpl(this->Root);
 	}
 
-	//void Delete(T item);
+	void Delete(T item)
+	{
+		DeleteItemImpl(&this->Root, item);
+	}
+
 	bool IsBST()
 	{
 		return IsBSTImpl(this->Root, INT_MIN, INT_MAX);
@@ -188,9 +251,26 @@ int main()
 	Before Visual C++ 2010, the auto keyword declares a variable in the automatic storage class; that is, a variable that has a local lifetime.
 	Starting with Visual C++ 2010, the auto keyword declares a variable whose type is deduced from the initialization expression in its declaration. The /Zc:auto[-] compiler option controls the meaning of the auto keyword.
 	*/
-	auto t1 = BSTInt->FindTreeItem(3);  //auto is a nice way of 
+	auto t1 = BSTInt->FindTreeItem(3);
 	auto t2 = BSTInt->FindTreeItem(5);
 	t1->Value = 5; t2->Value = 3;
+	BSTInt->DisplayTree();
+	printf("\nThe tree is a BST : %s\n\n", BSTInt->IsBST() ? "True" : "False");
+	t1->Value = 3; t2->Value = 5;
+
+
+	printf("Deleting 4 \n");
+	BSTInt->Delete(4);
+	BSTInt->DisplayTree();
+	printf("\nThe tree is a BST : %s\n\n", BSTInt->IsBST() ? "True" : "False");
+
+	printf("Deleting 6 \n");
+	BSTInt->Delete(6);
+	BSTInt->DisplayTree();
+	printf("\nThe tree is a BST : %s\n\n", BSTInt->IsBST() ? "True" : "False");
+
+	printf("Deleting 2 \n");
+	BSTInt->Delete(2);
 	BSTInt->DisplayTree();
 	printf("\nThe tree is a BST : %s\n\n", BSTInt->IsBST() ? "True" : "False");
 
