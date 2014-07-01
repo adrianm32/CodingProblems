@@ -210,9 +210,9 @@ public:
 		DeleteItemImpl(&this->Root, item);
 	}
 
-	bool IsBST()
+	bool IsBST(_In_ T minValue = INT_MIN , _In_ T maxValue = INT_MAX)
 	{
-		return IsBSTImpl(this->Root, INT_MIN, INT_MAX);
+		return IsBSTImpl(this->Root, minValue, maxValue);
 	}
 
 	NODE<T>* FindTreeItem(T item)
@@ -281,7 +281,7 @@ int main()
 	char itemsChar[7] = {'F', 'D', 'J', 'A', 'K', 'E', 'C'};
 	BSTChar->Insert(itemsChar, _countof(itemsChar)); 
 	BSTChar->DisplayTree();
-	//printf("\nThe tree is a BST : %s\n\n", BSTChar->IsBST() ? "True" : "False");
+	printf("\nThe tree is a BST : %s\n\n", BSTChar->IsBST('A' - 1, 'Z' + 1) ? "True" : "False");
 
 
 
