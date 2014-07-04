@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <stack>
 
 /*
 depth first BackTracking algorithm: gets rid of invalid subtrees and backs up.
@@ -76,6 +76,54 @@ void NQueens(int currQueen /* current queen */, int columns /* number of columns
 	}
 }
 
+struct QueenPosition
+{
+	int CurrQueen = 0;
+	int col = 0;
+
+	QueenPosition(int queen, int col) : CurrQueen(queen), col(col)
+	{}
+};
+
+void NQueensWithoutRecursion(int columns /* number of columns */)
+{
+	std::stack<QueenPosition> QStack;
+	int currQueen;
+	int currQueenCol;
+
+	QStack.push(QueenPosition(1, 0));
+
+	do
+	{
+		QueenPosition qp = QStack.top(); 
+		QStack.pop();
+		currQueen = qp.CurrQueen;
+		currQueenCol = qp.col + 1;
+
+		for (int column = currQueenCol; column <= columns; column++)
+		{
+			if (CanPlaceQueen(currQueen, column))
+				{
+					Queens[currQueen] = column;
+					if (currQueen == columns)
+					{
+						DisplaySolution(columns);
+					}
+					else
+					{
+						QStack.push(QueenPosition(currQueen, column));
+						currQueen++;
+						QStack.push(QueenPosition(currQueen, 0));
+						break; //need to go back to beginning of do loop from here with next queen.
+					}
+				}
+		}
+	}
+	while (!QStack.empty());
+	
+
+}
+
 
 // Prints all possible solutions to the 8 queen problem.  There are only 92 possible solutions to 8 queen.
 int main()
@@ -86,7 +134,13 @@ int main()
 
 	Queens = new int[n + 1]; //to keep it 1-based instead of 0 based, which makes it easier to read.
 
+	printf("\n With Recursion:\n");
 	NQueens(1 , n); //always start with queen on row 1. 
 
-	scanf_s("%d");
+	printf("\n Without Recursion:\n");
+	solutionCount = 0;
+	Queens = new int[n + 1]; //to keep it 1-based instead of 0 based, which makes it easier to read.
+	NQueensWithoutRecursion(n);
+
+	scanf_s("%d", &n);
 }

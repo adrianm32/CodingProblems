@@ -134,6 +134,7 @@ private:
 	{
 		if (*node == nullptr) return;
 
+		//Recursively keep finding the element.
 		if (item < (*node)->Value)
 			DeleteItemImpl(&(*node)->Left, item);
 		else if (item >(*node)->Value)
@@ -282,8 +283,6 @@ int main()
 	BSTChar->Insert(itemsChar, _countof(itemsChar)); 
 	BSTChar->DisplayTree();
 	printf("\nThe tree is a BST : %s\n\n", BSTChar->IsBST('A' - 1, 'Z' + 1) ? "True" : "False");
-
-
 
 
 	int n;
