@@ -3,33 +3,13 @@
 
 using namespace std;
 
-void AddIndent(int indent)
-{
-	for (int i = 0; i < indent; i++)
-	{
-		printf("-");
-	}
-}
-
-void Trace(int n, char x /*start tower*/, char y /*final tower */, char z /*intermediate tower*/, int indent)
-{
-	/*AddIndent(indent);
-	printf("TOI(%i, %c, %c, %c)\n", n, x, y, z);*/
-}
-
 
 void TowersOfHanoi(int n, char x /*start tower*/, char y /*final tower */, char z /*intermediate tower*/, int indent)
 {
-	//printf("Stack: %d, %c, %c, %c\n", n, x, y, z);
 	if (n == 0) return;
 
-	Trace(n - 1, x, z, y, indent++);
 	TowersOfHanoi(n - 1, x, z, y, indent);
-
-	AddIndent(indent);
 	cout << "Move topmost disk from Tower " << x << " to " << y << "\n";
-
-	Trace(n - 1, z, y, x, indent);
 	TowersOfHanoi(n - 1, z, y, x, indent);
 }
 
@@ -80,7 +60,6 @@ int main()
 	cin >> n;
 
 	printf("\n ToH With Recursion\n");
-	Trace(n, 'x', 'y', 'z', 0);
 	TowersOfHanoi(n, 'x', 'y', 'z', 1);
 
 	printf("\n ToH Without Recursion\n");

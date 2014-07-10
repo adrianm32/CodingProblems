@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <stack>
 
 using namespace std;
 
@@ -28,9 +29,15 @@ struct NODE
 	{}
 };
 
-#define TRAVERSE_PREORDER 0
-#define TRAVERSE_INORDER 1
-#define TRAVERSE_POSTORDER 2
+
+enum TraverseOrder
+{
+	PreOrder,
+	InOrder,
+	PostOrder,
+	PostOrderOneStack,
+	PostOrderTwoStacks,
+};
 
 
 /*
@@ -182,6 +189,39 @@ private:
 	}
 	
 
+	void TraverseTreeRecursiveImpl(NODE<T>* node, int traverseOrder)
+	{
+		switch (traverseOrder)
+		{
+		case InOrder:
+			if (node != nullptr)
+			{
+				TraverseTreeRecursiveImpl(node->Left, traverseOrder);
+				cout << node->Value << " ";
+				TraverseTreeRecursiveImpl(node->Right, traverseOrder);
+			}
+			break;
+		case PreOrder:
+			if (node != nullptr)
+			{
+				cout << node->Value << " ";
+				TraverseTreeRecursiveImpl(node->Left, traverseOrder);
+				TraverseTreeRecursiveImpl(node->Right, traverseOrder);
+			}
+			break;
+		case PostOrder:
+			if (node != nullptr)
+			{
+				TraverseTreeRecursiveImpl(node->Left, traverseOrder);
+				TraverseTreeRecursiveImpl(node->Right, traverseOrder);
+				cout << node->Value << " ";
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
 public:
 	BST() : Root(nullptr) {};
 
@@ -225,6 +265,131 @@ public:
 	void DisplayTree()
 	{
 		DisplayTreeImpl(this->Root);
+	}
+
+	void TraverseTree(_In_ int traverseOrder = InOrder)
+	{
+		printf("Traversing Tree :");
+		TraverseTreeRecursiveImpl(this->Root, traverseOrder);
+		printf("\n");
+	}
+
+	void TraverseTreeWithoutRecursion(_In_ int traverseOrder = InOrder)
+	{
+		stack<NODE<T>*> stack, outputStack;
+		NODE<T> * curr = nullptr;
+
+
+		switch (traverseOrder)
+		{
+			case InOrder:
+			{
+				//current solution is using current pointer. You could also keep track of visited nodes, but then that requires additional storage in Node struct.
+  
+				curr = this->Root;
+				while (!stack.empty() || curr)
+				{
+					if (curr)     //keep iterating down the left tree pushing visited node onto the stack.
+					{
+						stack.push(curr);
+						curr = curr->Left;
+					}
+					else   
+					{
+						//when reach leftmost leaf node, pop parent from stack, print it and visit right subtree.
+						curr = stack.top(); stack.pop();
+						cout << curr->Value << " ";
+						curr = curr->Right;
+					}
+				}
+
+			}
+			break;
+		case PreOrder:  //easiest
+			{
+
+				stack.push(this->Root);
+
+				while (!stack.empty())
+				{
+					curr = stack.top(); stack.pop();
+
+					if (curr)
+					{
+						cout << curr->Value << " ";
+						stack.push(curr->Right);  //push right first so that it is processed last.
+						stack.push(curr->Left);  //push left last so that it is processed before right.
+					}
+				}
+			}
+			break;
+
+		case PostOrderOneStack:   //most difficult
+			{
+				stack.push(this->Root);
+				curr = this->Root;
+				NODE<T> * prev = nullptr;  //previously traversed node . this helps to know whether you are traversing up or down the tree based on its relation to curr.
+
+				while (!stack.empty())
+				{
+					curr = stack.top();  //just peek, dont pop here.
+					if (!prev || prev->Left == curr || prev->Right == curr)  //traversing down, if prev == null or curr is left/right child of prev
+					{
+						if (curr->Left)   //traverse  down left if there is a left node
+						{
+							stack.push(curr->Left);
+						}
+						else if (curr->Right)   //traverse  down right if there is a right node
+						{
+							stack.push(curr->Right);
+						}
+					}
+					else if (curr->Left == prev)  //traversing up from left
+					{
+						if (curr->Right)
+						{
+							stack.push(curr->Right);
+						}
+					}
+					else   //traversing up from right. Traversing up from right means you are done and need to print current node.
+					{
+						cout << curr->Value << " ";
+						stack.pop();  //actually printing the value, so pop it off here.
+					}
+
+					prev = curr;
+
+				}
+			}
+			break;
+
+		case PostOrderTwoStacks:
+			{
+				/*
+				An alternative solution is to use two stacks.  it is doing a reversed pre-order traversal. That is, the order of traversal is a node, then its right child followed by its left child. This yields post-order traversal in reversed order. Using a second stack, we could reverse it back to the correct order.
+				*/
+
+				stack.push(this->Root);
+
+				while (!stack.empty())
+				{
+					curr = stack.top(); stack.pop();
+					outputStack.push(curr);  //push to second stack.
+
+					if (curr->Left) stack.push(curr->Left);   // in this case push left first so that it goes into outputstack last.
+					if (curr->Right)  stack.push(curr->Right);
+				}
+
+				//stack has post-order in reverse order
+				while (!outputStack.empty())
+				{
+					curr = outputStack.top(); outputStack.pop();
+					cout << curr->Value << " ";
+				}
+			}
+			break;
+		}
+		
 	}
 
 
@@ -276,7 +441,25 @@ int main()
 	printf("\nThe tree is a BST : %s\n\n", BSTInt->IsBST() ? "True" : "False");
 
 
+	printf("\nPreOrder Traversal:");
+	BSTInt->TraverseTree(PreOrder);
+	printf("\nInOrder Traversal:");
+	BSTInt->TraverseTree(InOrder);
+	printf("\nPostOrder Traversal:");
+	BSTInt->TraverseTree(PostOrder);
 
+
+	printf("\nPreOrder Traversal Without Recursion:");
+	BSTInt->TraverseTreeWithoutRecursion(PreOrder);
+	printf("\nInOrder Traversal Without Recursion:");
+	BSTInt->TraverseTreeWithoutRecursion(InOrder);
+	printf("\nPostOrder Traversal Without Recursion- One Stack:");
+	BSTInt->TraverseTreeWithoutRecursion(PostOrderOneStack);
+	printf("\nPostOrder Traversal Without Recursion - Two Stacks:");
+	BSTInt->TraverseTreeWithoutRecursion(PostOrderTwoStacks);
+
+
+	printf("\n\n");
 	BST<char>* BSTChar = new BST<char>();
 
 	char itemsChar[7] = {'F', 'D', 'J', 'A', 'K', 'E', 'C'};
