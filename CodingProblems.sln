@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AtoI", "AtoI\AtoI.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegerOverflow", "IntegerOverflow\IntegerOverflow.vcxproj", "{AA6AF28E-1074-4D9B-AFC5-6EFBD8911E35}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Trie-WordSearch", "Trie-WordSearch\Trie-WordSearch.vcxproj", "{943C2303-1614-45F5-A613-8616CD078762}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -63,6 +65,10 @@ Global
 		{AA6AF28E-1074-4D9B-AFC5-6EFBD8911E35}.Debug|Win32.Build.0 = Debug|Win32
 		{AA6AF28E-1074-4D9B-AFC5-6EFBD8911E35}.Release|Win32.ActiveCfg = Release|Win32
 		{AA6AF28E-1074-4D9B-AFC5-6EFBD8911E35}.Release|Win32.Build.0 = Release|Win32
+		{943C2303-1614-45F5-A613-8616CD078762}.Debug|Win32.ActiveCfg = Debug|Win32
+		{943C2303-1614-45F5-A613-8616CD078762}.Debug|Win32.Build.0 = Debug|Win32
+		{943C2303-1614-45F5-A613-8616CD078762}.Release|Win32.ActiveCfg = Release|Win32
+		{943C2303-1614-45F5-A613-8616CD078762}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
