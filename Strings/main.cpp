@@ -41,11 +41,10 @@ void ReverseWords(char * str)
 
 	cout << "\n " << str << "  (Words Reversed) ";
 
-
 	//first reverse string
 	ReverseString(str, 0);
 
-	//then reverse each letters of each word.
+	//then reverse letters of each word.
 	int i = 0, k=0 , l=0;
 	char temp;
 	while (i < len)
@@ -82,6 +81,8 @@ int main()
 
 	char str2[] = "Coding is Fun";
 	ReverseWords(str2);
+	char str3[] = "Coding";
+	ReverseWords(str3);
 
 	int n;
 	cin >> n;
