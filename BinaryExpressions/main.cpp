@@ -149,7 +149,7 @@ NODE* PostfixToTree(std::string postfix)
 
 			}
 				break;
-			default:   //means it is a number, keep pushign operand nodes to the stack.
+			default:   //means it is a number, keep pushing operand nodes to the stack.
 			{
 						   istr.putback(token);
 						   int num;
@@ -225,6 +225,66 @@ void TraverseTree(NODE* node, TraverseOrder traverseOrder)
 
 
 
+int EvaluatePostfix(string postfix)
+{
+	istringstream istr(postfix);
+
+	stack<int> stack;
+	char token;
+	int right, left, num;
+
+	while (istr >> token)
+	{
+		switch (token)
+		{
+			case '+':
+			{
+						right = stack.top(); stack.pop();
+						left = stack.top(); stack.pop();
+						stack.push(left + right);
+			}
+				break;
+			case '-':
+			{
+						right = stack.top(); stack.pop();
+						left = stack.top(); stack.pop();
+						stack.push(left - right);
+
+
+			}
+				break;
+			case '/':
+			{
+						right = stack.top(); stack.pop();
+						left = stack.top(); stack.pop();
+						stack.push(left / right);
+
+			}
+				break;
+			case '*':
+			{
+						right = stack.top(); stack.pop();
+						left = stack.top(); stack.pop();
+						stack.push(left * right);
+
+			}
+				break;
+			default:  //means it is a number
+			{
+						  istr.putback(token);
+						  istr >> num;
+						  stack.push(num);
+			}
+				break;
+		}
+
+	}
+
+	return stack.top();
+
+}
+
+
 int main()
 {
 
@@ -235,7 +295,7 @@ int main()
 
 	InfixToPostfix(infix, postfix);
 	Root = PostfixToTree(postfix);
-	printf("(Infix) %s  => (Postfix) %s  => (value) %d\n", infix, postfix, Root->Value());
+	printf("(Infix) %s  => (Postfix) %s  => (value) %d %d\n", infix, postfix, Root->Value(), EvaluatePostfix(postfix));
 	TraverseTree(Root, PreOrder);
 
 
