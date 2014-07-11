@@ -95,7 +95,7 @@ private:
 	void DisplayTreeImpl(_In_ NODE<T>* node, _In_ int indent = 0, _In_ char* LR = "") //can specify default values for optional parameters.
 	{
 		
-		//do post-order traversal to show the tree from left to right (instead of top down) and right (top) to left (bottom). 
+		//do in-order traversal in reverse to show the tree from left to right (instead of top down) and right (top) to left (bottom). 
 		if (node == nullptr) return;
 		DisplayTreeImpl(node->Right, indent + 6, "R:");
 
@@ -109,6 +109,7 @@ private:
 
 	void DeleteTreeImpl(_In_ NODE<T>* node)
 	{
+		//post order traversal
 		DeleteTreeImpl(node->Left);
 		DeleteTreeImpl(node->Right);
 		delete(node);

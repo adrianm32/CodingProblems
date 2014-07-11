@@ -43,7 +43,7 @@ int NODE::Value()
 		switch (Content.op)
 		{
 			case '+':
-				return Left->Value() + Right->Value();
+				return Left->Value() + Right->Value();  //no need to check to see if left and right are not null
 			case '-':
 				return Left->Value() - Right->Value();
 			case '*':
