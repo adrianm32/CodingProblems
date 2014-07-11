@@ -20,8 +20,8 @@ private:
 
 public:
 	Trie() : Root(nullptr) {}
-	void Insert(_In_ char* word);
-	bool IsWord(_In_ char* word);
+	virtual void Insert(_In_ char* word);
+	virtual bool IsWord(_In_ char* word);
 };
 
 bool IsWordValid(_In_ char * word)
@@ -39,12 +39,12 @@ bool IsWordValid(_In_ char * word)
 
 void Trie::Insert(_In_ char* word)
 {
-	NODE * curr = this->Root;
+	NODE * curr = this->Root;  //set curr to Root
 	NODE * temp = nullptr;
 
 	if (!IsWordValid(word)) return; //bail out if not valid word.
 	
-	if (this->Root == nullptr)   //initialize root if not already and curr
+	if (this->Root == nullptr)   //initialize root if not already and set curr to Root
 	{
 		this->Root = curr = new NODE();
 	}
@@ -85,6 +85,17 @@ bool Trie::IsWord(_In_ char* word)
 		return true;
 	}
 }
+
+
+class TrieWithBitFlags : public Trie
+{
+private:
+
+public:
+	virtual void Insert(_In_ char* word) override;
+	virtual bool IsWord(_In_ char* word) override;
+
+};
 
 
 
