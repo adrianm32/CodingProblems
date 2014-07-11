@@ -26,6 +26,7 @@ public:
 
 bool IsWordValid(_In_ char * word)
 {
+	//could also use isAlpha from ctype.h
 	while (word && *word != '\0')
 	{
 		if (tolower(*word) < 'a' || tolower(*word) > 'z')
