@@ -59,8 +59,22 @@ int NODE::Value()
 	{
 		return Content.num;
 	}
+
+	return Content.num;
 }
 
+
+bool HasHigherPrecedence(char op1, char op2)
+{
+	std::string operators = "(+-*/";
+
+	int precedence[] = {0 /*(*/, 1 /*+*/, 1 /*-*/, 2 /***/, 2 /*/*/};
+
+	return precedence[operators.find(op1)] >= precedence[operators.find(op2)];
+}
+
+
+// 1 + 2 * 3 + 5   =>  1 2 3 * 5 + +
 void InfixToPostfix(_In_ char * infix, _Out_ char * postfix)
 {
 	stack<char> opStack;
@@ -78,6 +92,14 @@ void InfixToPostfix(_In_ char * infix, _Out_ char * postfix)
 		case '*':
 		case '/':
 			{
+
+				//check for precedence. Can push onto stack only if higher precedece than topmost operator of stack.
+				while (!opStack.empty() && HasHigherPrecedence(opStack.top(), *infix))
+				{
+					*postfix++ = ' ';
+					*postfix++ = opStack.top(); opStack.pop();
+				}
+
 				opStack.push(*infix);
 				addspace = true;
 			}
@@ -285,10 +307,79 @@ int EvaluatePostfix(string postfix)
 }
 
 
+
+
+// 1 + ( 2 * 3)  =>        + 1 * 2 3
+// 1 + 2 * 3 + 5 =>   + 1 + * 2 3 5
+//http://www.slideshare.net/khateeb321/infix-to-prefix
+void InfixToPrefix(char * infix, char * prefix)
+{
+
+	stack<char> prefixStack, operatorStack;
+
+	int len = strlen(infix);
+
+	//start iterating the infix string from reverse direction and push operators from operator stack to prefix stack on precedence violation
+	for (int i = len -1; i >= 0; i--)
+	{
+		switch (infix[i])
+		{
+			case '+':
+			case '-':
+			case '*':
+			case '/':
+			{
+						//check of precedence. cannot add operator on top of higher precedence operator.
+						while (!operatorStack.empty() && HasHigherPrecedence(operatorStack.top(), infix[i]))
+						{
+							prefixStack.push(operatorStack.top());  //transfer operator from operator stack to prefix stack.
+							operatorStack.pop();
+						}
+						operatorStack.push(infix[i]);
+			}
+				break;
+			case '(':
+			{
+
+						prefixStack.push(operatorStack.top());  //transfer operator from operator stack to prefix stack.
+						operatorStack.pop();
+			}
+				
+				break;
+			case ')': // ignore
+				break;
+			default:  // number;
+				{
+						  prefixStack.push(infix[i]);
+		
+				}
+				break;
+		}
+
+
+
+	}
+
+	while (!operatorStack.empty())
+	{
+		prefixStack.push(operatorStack.top());  //transfer operator from operator stack to prefix stack.
+		operatorStack.pop();
+	}
+
+	while (!prefixStack.empty())
+	{
+		*prefix++ = prefixStack.top(); prefixStack.pop();
+	}
+
+	*prefix = '\0';
+
+}
+
+
 int main()
 {
 
-	char postfix [_MAX_PATH];
+	char postfix [_MAX_PATH], prefix[_MAX_PATH];
 	NODE* Root = nullptr;
 
 	char * infix = "1+(23*10)/5";
@@ -297,6 +388,17 @@ int main()
 	Root = PostfixToTree(postfix);
 	printf("(Infix) %s  => (Postfix) %s  => (value) %d %d\n", infix, postfix, Root->Value(), EvaluatePostfix(postfix));
 	TraverseTree(Root, PreOrder);
+
+	InfixToPostfix("1 + 2 * 3 + 5", postfix);
+	printf("\n(Infix) %s  => (Postfix) %s \n", "1 + 2 * 3 + 5", postfix);
+
+
+	InfixToPrefix("1 + 2 * 3 + 5", prefix);
+	printf("\n(Infix) %s  => (Prefix) %s \n", "1 + 2 * 3 + 5", prefix);
+
+	InfixToPrefix("1 + (2 * 3) + 5", prefix);
+	printf("\n(Infix) %s  => (Prefix) %s \n", "1 + (2 * 3) + 5", prefix);
+
 
 
 	int n;
