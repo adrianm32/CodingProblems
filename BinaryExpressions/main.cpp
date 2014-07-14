@@ -18,6 +18,7 @@ typedef struct NODE
 
 	int Value();
 	void DisplayValue();
+	void DisplayInfix();
 
 	NODE* Left, *Right;
 
@@ -33,6 +34,25 @@ void NODE::DisplayValue()
 	}
 	else
 		cout << Content.num << ' ';
+
+}
+
+void NODE::DisplayInfix()
+{
+	if (ContentType == 0)  //operator
+	{
+		cout << '(';
+	}
+	
+	if (Left) Left->DisplayInfix();
+	DisplayValue();
+	if (Right) Right->DisplayInfix();
+
+
+	if (ContentType == 0)
+	{
+		cout << ')';
+	}
 
 }
 
@@ -213,7 +233,6 @@ void TraverseTree(NODE* node, TraverseOrder traverseOrder)
 							node->DisplayValue();
 							TraverseTree(node->Right, traverseOrder);
 
-
 						}
 		}
 			break;
@@ -388,9 +407,15 @@ int main()
 	Root = PostfixToTree(postfix);
 	printf("(Infix) %s  => (Postfix) %s  => (value) %d %d\n", infix, postfix, Root->Value(), EvaluatePostfix(postfix));
 	TraverseTree(Root, PreOrder);
+	printf("\nBack to Infix: ");
+	Root->DisplayInfix();
 
 	InfixToPostfix("1 + 2 * 3 + 5", postfix);
+	Root = PostfixToTree(postfix);
 	printf("\n(Infix) %s  => (Postfix) %s \n", "1 + 2 * 3 + 5", postfix);
+	printf("\nBack to Infix: ");
+	Root->DisplayInfix();
+	
 
 
 	InfixToPrefix("1 + 2 * 3 + 5", prefix);
