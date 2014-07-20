@@ -10,7 +10,7 @@ typedef struct NODE
 } NODEITEM;
 
 
-NODE * CreateList(int count)
+NODE * CreateList(int count, bool random = false)
 {
 	if (count == 0) return nullptr;
 
@@ -18,7 +18,7 @@ NODE * CreateList(int count)
 	NODE * t = Head;
 	for (int i = 1; i < count; i++)
 	{
-		t = t->next = new NODE(i);
+		t = t->next = new NODE(random ? rand() % count : i);
 	}
 
 	return Head;
@@ -57,6 +57,24 @@ NODE* ReverseList(NODE * Head)
 
 }
 
+void SortList(NODE * node)
+{
+	//Bubble sorting by comparing adjacent nodes.
+	for (NODE* node1 = node; node1->next != nullptr; node1= node1->next)    // i=0 to end - 1 => (node1->next != null)
+	{
+		for (NODE* node2 = node1->next; node2 != nullptr; node2 = node2->next)   //j= i+1 to end   end => (node2 != null)
+		{
+			if (node1->value > node2->value)
+			{
+				//swap values
+				node1->value = node1->value + node2->value;  //watch out for integer overflow
+				node2->value = node1->value - node2->value;
+				node1->value = node1->value - node2->value;
+			}
+		}
+	}
+}
+
 int main()
 {
 	NODE * Head = CreateList(10);
@@ -64,6 +82,15 @@ int main()
 
 	Head = ReverseList(Head);
 	DisplayList(Head);
+
+	Head = CreateList(10, true);
+	DisplayList(Head);
+
+	SortList(Head);
+	DisplayList(Head);
+
+	
+
 
 
 	int n;
