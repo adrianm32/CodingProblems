@@ -36,6 +36,17 @@ void DisplayItems(int items[], int length)
 }
 
 
+/*********************************************************************************
+
+							BUBBLE SORT
+
+
+************************************************************************/
+
+
+
+
+
 /*
 Compare adjacent elements until the largest ends up on the end.
 */
@@ -69,6 +80,15 @@ void BubbleSort(int * items, int length)
 	DisplayItems(items, length);
 
 }
+
+
+/*********************************************************************************
+
+						INSERTION SORT
+
+
+************************************************************************/
+
 
 /*
 keep inserting each element in its rightful place to the left.
@@ -105,6 +125,14 @@ void InsertionSort(int * items, int length)
 
 
 }
+
+
+/*********************************************************************************
+
+						SELECTION SORT
+
+
+************************************************************************/
 
 
 /*
@@ -148,7 +176,12 @@ void SelectionSort(int * items, int length)
 
 }
 
+/*********************************************************************************
 
+							VARITION OF SELECTION SORT
+
+
+************************************************************************/
 
 
 void SomeSort(int * items, int length)
@@ -181,33 +214,179 @@ void SomeSort(int * items, int length)
 
 }
 
+/*********************************************************************************
 
-void Heapify(int *items, int length)
+							HEAP SORT
+
+
+************************************************************************/
+
+
+/*
+Binary tree layout in array.
+For 1-Based array, :  1 2 3
+Parent =  floor((i / 2)     
+LeftChild = 2 * i;
+RightChild = 2 * i + 1;
+
+
+For 0-Based Array  :   0 1 2
+
+Parent = floor((i-1)/ 2)     eg. (2-1)/ 2 = 0 else it would be 2/2 = 1
+Left Child = 2 * i + 1
+Right child = 2 * i + 2
+
+
+
+First heapify the tree in the array such that it is a valid priority queue with max element at the top of heap at index 0.
+Then move/swap root to end of array (sorted list) and restore the heap property for remaining smaller heap(unsorted list).
+
+heapify from bottom up, by sifting down each parent down to the leaves until heap property is satisfied.
+
+
+*/
+
+
+
+enum HeapifyBuildOrder
 {
+	BottomUp,   //start with bottom most parent node level and move up.   0(n) since we skip all the leaf nodes which is most of the number.
+	TopDown    //start with empty heap and add one element at a time. 0(n log n) since we have to iterate every leaf node which is most of the number.
+};
 
+
+/*
+Pushes parent down to the tree until heap order is restored.
+*/
+
+void SiftDown(int * items, int startIndex, int endIndex)
+{
+	int childIndex, temp;
+	int rootIndex = startIndex;  //start at root of heap.
+
+	while ((2 * rootIndex + 1) <= endIndex)  //while root has at least one child, left child
+	{
+		int swapIndex = rootIndex;
+
+		childIndex = 2 * rootIndex + 1;
+		if (items[swapIndex] < items[childIndex])  //compare with left child.
+		{
+			swapIndex = childIndex;
+		}
+		
+		if (childIndex + 1 <= endIndex && items[swapIndex] < items[childIndex + 1])  // if there is right child, compare parent/left with right child
+		{
+			swapIndex = childIndex + 1;
+		}
+
+		if (swapIndex != rootIndex)
+		{
+			//swap
+			temp = items[swapIndex];
+			items[swapIndex] = items[rootIndex];
+			items[rootIndex] = temp;
+
+			rootIndex = swapIndex; // make swap index the next root and sift down the tree.
+		}
+		else
+			break;  // return since heap priority queue is in order.
+	}
 }
 
 
-void HeapSort(int * items, int length)
+void SiftUp(int * items, int startIndex, int endIndex)
 {
-	Heapify(items, length);
+	int childIndex = endIndex;  //start with bottom most child and sift it up along its parent tree path.
+	int parentIndex, temp;
 
-	for (int i = 0; i < length - 2; i++)
+	while (childIndex > startIndex)
 	{
-		//swap items[i] and items[length - 1];
-		length--;
+		parentIndex = floor((childIndex - 1)/2);  //sift up with parent.
 
+		if (items[parentIndex] < items[childIndex])
+		{
+			//swap
+			temp = items[parentIndex];
+			items[parentIndex] = items[childIndex];
+			items[childIndex] = temp;
+
+			childIndex = parentIndex;  //move/sift up the tree.
+		}
+		else
+			break; //return since heap is priority queeue order.
+	}
+}
+
+/*
+Heapify the binary tree stored in array by skipping leaf nodes and starting with the last parent node in the last but one level of the tree.
+and then keep building it bottom-up all the way to the root.
+*/
+void Heapify(int *items, int length, HeapifyBuildOrder heapifyOrder)
+{
+	int endIndex = length - 1;  // 0 based.
+
+	switch (heapifyOrder)
+	{
+		 
+		case BottomUp: //start with bottom most parent node level and move up.   0(n) since we skip all the leaf nodes which is most of the number.
+		{
+						 int parentIndex = floor((endIndex - 1) / 2);  //start with the last parent in the array.
+
+						 while (parentIndex >= 0)
+						 {
+							 SiftDown(items, parentIndex, endIndex);
+							 parentIndex--;
+						 }
+
+		}
+			break;
+		case TopDown: //start with empty heap and add one element at a time. 0(n log n) since we have to iterate every leaf node which is most of the number
+		{
+						  int heapEndIndex = 0;
+						  while (heapEndIndex <= endIndex)
+						  {
+							  SiftUp(items, 0, heapEndIndex);
+							  heapEndIndex++;
+
+						  }
+		}
+			break;
+		default:
+			break;
 	}
 
+	
+}
+
+void HeapSort(int * items, int length, HeapifyBuildOrder heapifyOrder = BottomUp)
+{
+	int temp;
+
+	Heapify(items, length, heapifyOrder);   //after this point root of heap (max value ) is at items[0]
+
+	int endIndex = length - 1;
+
+	while (endIndex > 0)
+	{
+		//swap 0 and endIndex
+		temp = items[0];
+		items[0] = items[endIndex];
+		items[endIndex] = temp;
+
+		endIndex--;   //reduce end by 1 since the largest of the heap is being moved to the sorted end, thereby reducing heap size.
+
+		SiftDown(items, 0, endIndex);   //swap ruined heap property, so restore it again by sifting the new root at 0 down the tree.
+
+	}
 
 
 	if (IsSorted(items, length))
 	{
-		printf("\nHeap Sort - Sorted items: ");
+		printf("\nHeap Sort %s - Sorted items: " , heapifyOrder == BottomUp? "BottomUp" : "TopDown");
 	}
 	else
 	{
-		printf("\n Heap Sort- Incorrect sorting : ");
+		printf("\n Heap Sort %s- Incorrect sorting : ", heapifyOrder == BottomUp ? "BottomUp" : "TopDown");
 	}
 	DisplayItems(items, length);
 
@@ -240,6 +419,16 @@ int main()
 	CopyArray(items, items2, length);
 	DisplayItems(items, length);
 	SelectionSort(items, length);
+
+	printf("\n Unsorted List: ");
+	CopyArray(items, items2, length);
+	DisplayItems(items, length);
+	HeapSort(items, length);
+
+	printf("\n Unsorted List: ");
+	CopyArray(items, items2, length);
+	DisplayItems(items, length);
+	HeapSort(items, length, TopDown);
 
 
 	int n;
