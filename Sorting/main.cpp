@@ -393,8 +393,38 @@ void HeapSort(int * items, int length, HeapifyBuildOrder heapifyOrder = BottomUp
 
 }
 
+/********************************************************************
 
+				BINARY SEARCH
 
+***************************************************************/
+
+void BinarySearch(int * items, int length, int item)
+{
+	int start = 0;
+	int end = length - 1;
+	int mid;
+
+	while (start <= end)   // <= in case there is just one item or if item is the last item.
+	{
+		mid = (start + end) / 2;
+
+		if (item == items[mid])
+		{
+			printf("\n Found item %d at position %d \n ", item, mid );
+			return;
+		}
+		else if (item < items[mid])
+		{
+			end = mid - 1;
+		}
+		else
+			start = mid + 1;
+	}
+
+	printf("\n Did not find item %d \n", item);
+
+}
 
 int main()
 {
@@ -429,6 +459,17 @@ int main()
 	CopyArray(items, items2, length);
 	DisplayItems(items, length);
 	HeapSort(items, length, TopDown);
+
+
+	BinarySearch(items, length, 5);
+	BinarySearch(items, length, 41);
+	BinarySearch(items, length, 2995);
+	BinarySearch(items, length, 32391);
+
+	
+	
+
+
 
 
 	int n;
