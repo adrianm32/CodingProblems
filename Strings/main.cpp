@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 
 using namespace std;
 
@@ -18,6 +18,74 @@ void IsPalindrome(char * str)
 	cout << str << " is a palindrome\n";
 }
 
+
+/********************************************************************************************
+
+Unicode:
+You can classify bytes in a UTF-8 stream as follows:
+•With the high bit set to 0, it's a single byte value.
+•With the two high bits set to 10, it's a continuation byte.
+•Otherwise, it's the first byte of a multi-byte sequence and the number of leading 1 bits indicates how many bytes there are in total for this sequence (110... means two bytes, 1110... means three bytes, etc).
+
+
+UTF-8
+Range              Encoding  Binary value
+-----------------  --------  --------------------------
+U+000000-U+00007f  0xxxxxxx  0xxxxxxx
+
+U+000080-U+0007ff  110yyyxx  00000yyy xxxxxxxx
+                   10xxxxxx
+
+U+000800-U+00ffff  1110yyyy  yyyyyyyy xxxxxxxx
+                   10yyyyxx
+                   10xxxxxx
+
+U+010000-U+10ffff  11110zzz  000zzzzz yyyyyyyy xxxxxxxx
+                   10zzyyyy
+                   10yyyyxx
+                   10xxxxxx
+
+
+
+
+
+				   0
+				   1000   8      //continuation bytes.
+				   1100   12 C    //leading , total 2 byte (2 ones)
+				   1110   14 E    // leading, total 3 bytes (3 ones)
+				   1111   15 F    // leading, total 4 bytes (4 ones)
+
+
+******************************************************************************/
+
+int StrlenUTF8(char * str)
+{
+	int count = 0;
+	int i = 0;
+	while (str[i]) 
+	{
+
+		if ((str[i] & 0xC0) != 0x80)  //ignore continuation bytes, start with 1000  ie. 8
+		{
+			count++;
+		}
+
+		i++;
+	}
+
+	return count;
+}
+
+void ReverseUTF8(char * str)
+{
+	cout << "\n " << str << "  (UTF8 Reversed) ";
+
+	//first reverse string
+	//ReverseString(str, 0);
+
+	//Then reverse Unicode bytes.
+
+}
 
 void ReverseString(char *str , int displayOutput = 1)
 {
@@ -202,7 +270,9 @@ int main()
 	cout << "\nQuickSort Anagrams: " << str6 << " and " << str7;
 	AreAnagramsUsingQuickSort(str6, str7);
 	
-
+	//cannot enter UTF chars inside source file. Embedding them directly. This contains 4 chars.
+	char strUTF[] = {0x24, 0xC2, 0xA2, 0xE2, 0x82, 0xAC, 0xF0, 0xA4, 0xAD, 0xA2, '\0'};
+	printf("\n strlen(%s) = %d", strUTF, StrlenUTF8(strUTF));
 
 
 	int n;

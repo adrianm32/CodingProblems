@@ -327,10 +327,33 @@ int EvaluatePostfix(string postfix)
 
 
 
+/************************************************************************************************
 
+               INFIX TO PREFIX  / PREFIX TO INFIX
+
+			   always start scanning from end of string and build stack(Reverse)
+
+			   http://scanftree.com/Data_Structure/prefix-to-infix
+
+			   http://scanftree.com/Data_Structure/infix-to-prefix
+
+
+
+
+
+********************************************************************************************/
+
+
+
+/*
 // 1 + ( 2 * 3)  =>        + 1 * 2 3
 // 1 + 2 * 3 + 5 =>   + 1 + * 2 3 5
 //http://www.slideshare.net/khateeb321/infix-to-prefix
+
+start from reverse end of string moving backwards.
+
+*/
+
 void InfixToPrefix(char * infix, char * prefix)
 {
 
@@ -391,6 +414,14 @@ void InfixToPrefix(char * infix, char * prefix)
 	}
 
 	*prefix = '\0';
+
+}
+
+
+
+
+void PrefixToInfix()
+{
 
 }
 

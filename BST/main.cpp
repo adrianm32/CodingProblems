@@ -129,6 +129,55 @@ private:
 			&& IsBSTImpl(node->Right, node->Value, maxValue);   //right subtree has min limit
 	}
 
+
+	bool IsBSTImplBottomUp(_In_ NODE<T> * node, T & minValue, T & maxValue)
+	{
+		if (node == nullptr) return true;
+
+		bool isLeftBST = true , isRightBST = true;
+		int nodeMin = minValue, nodeMax = maxValue;
+
+		if (node->Left == nullptr)
+		{
+			minValue = nodeMin = node->Value;
+
+		}
+		else
+		{
+			isLeftBST = IsBSTImplBottomUp(node->Left, minValue, maxValue);
+			nodeMin = maxValue;
+		}
+
+		if (node->Right == nullptr)
+		{
+			maxValue = nodeMax = node->Value;
+		}
+		else
+		{
+			isRightBST = IsBSTImplBottomUp(node->Right, minValue, maxValue);
+			nodeMax = minValue;
+		}
+
+		if (!isLeftBST || !isRightBST)
+		{
+			return false;
+		}
+
+		if (node->Value < nodeMin || node->Value > nodeMax )
+		{
+			cout << "Not a BST: Violating node :" << node->Value << "\n";
+			return false;
+		}
+
+		minValue = nodeMin;
+		maxValue = nodeMax;
+
+
+
+		return true;
+
+	}
+
 	NODE<T>* FindMin(NODE<T> * node)
 	{
 		while (node->Left)
@@ -255,6 +304,11 @@ public:
 	bool IsBST(_In_ T minValue = INT_MIN , _In_ T maxValue = INT_MAX)
 	{
 		return IsBSTImpl(this->Root, minValue, maxValue);
+	}
+
+	bool IsBSTBottomUp(_In_ T minValue = 0, _In_ T maxValue = 0)
+	{
+		return IsBSTImplBottomUp(this->Root, minValue, maxValue);
 	}
 
 	NODE<T>* FindTreeItem(T item)
@@ -407,6 +461,7 @@ int main()
 	BSTInt->Insert(items, _countof(items)); // have to pass in count since when we pass in int[] , it gets converted to int * and _countof does not like int *
 	BSTInt->DisplayTree();
 	printf("\nThe tree is a BST : %s\n\n", BSTInt->IsBST()? "True" : "False");
+	printf("\nThe tree is a BST (Bottom Up) : %s\n\n", BSTInt->IsBSTBottomUp() ? "True" : "False");
 
 
 	int items2[5] = { 18, 5, 13, 17, 6 };

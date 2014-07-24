@@ -57,6 +57,21 @@ NODE* ReverseList(NODE * Head)
 
 }
 
+NODE * RecursiveHead;
+NODE* ReverseListRecursive(NODE * node)
+{
+	if (node->next == nullptr)
+	{
+		RecursiveHead = node;
+		return node;
+	}
+
+	NODE* temp = ReverseListRecursive(node->next);
+	temp->next = node;
+	node->next = nullptr;
+	return node;
+}
+
 void SortList(NODE * node)
 {
 	//Bubble sorting by comparing adjacent nodes.
@@ -82,6 +97,10 @@ int main()
 
 	Head = ReverseList(Head);
 	DisplayList(Head);
+
+	Head = ReverseList(Head);
+	Head = ReverseListRecursive(Head);
+	DisplayList(RecursiveHead);
 
 	Head = CreateList(10, true);
 	DisplayList(Head);
