@@ -4,12 +4,27 @@ using namespace std;
 
 typedef struct NODE
 {
+private :
+	int IsWordBitFlag = 0;
+
+public:
 	NODE* Next[26];
 
 	NODE()
 	{
 		for (int i = 0; i < 26; i++)
 			Next[i] = nullptr;
+	}
+
+	bool IsWordBitFlagSet(int bitPosition)
+	{
+		return IsWordBitFlag &= (1 << (sizeof(int)* 8 - 1)) >> bitPosition;;
+
+	}
+
+	void SetWordBitFlag(int bitPosition)
+	{
+		IsWordBitFlag |= (1 << (sizeof(int)* 8 - 1)) >> bitPosition;
 	}
 } NODE;
 
@@ -27,6 +42,8 @@ public:
 bool IsWordValid(_In_ char * word)
 {
 	//could also use isAlpha from ctype.h
+	if (!word) return false;
+
 	while (word && *word != '\0')
 	{
 		if (tolower(*word) < 'a' || tolower(*word) > 'z')
@@ -42,6 +59,8 @@ void Trie::Insert(_In_ char* word)
 {
 	NODE * curr = this->Root;  //set curr to Root
 	NODE * temp = nullptr;
+	
+	if (!word) return;
 
 	if (!IsWordValid(word)) return; //bail out if not valid word.
 	
@@ -50,17 +69,22 @@ void Trie::Insert(_In_ char* word)
 		this->Root = curr = new NODE();
 	}
 
-	while (word &&  *word != '\0')
+	char * pStr = word;
+	while (*pStr != '\0')
 	{
-		temp = curr->Next[tolower(*word) - 'a'];
+		temp = curr->Next[tolower(*pStr) - 'a'];
 		if (temp == nullptr)
 		{
-			curr->Next[tolower(*word) - 'a'] = temp = new NODE();
+			curr->Next[tolower(*pStr) - 'a'] = temp = new NODE();
 		}
 		curr = temp;
 
-		word++;
+		pStr++;
 	}
+
+	//Set IsWordBitFlag
+	curr->SetWordBitFlag(tolower(word[strlen(word) - 1] - 'a'));
+
 }
 
 bool Trie::IsWord(_In_ char* word)
@@ -69,13 +93,16 @@ bool Trie::IsWord(_In_ char* word)
 	char * str = word;
 	bool IsWord = false;
 
-	while (curr && word && *word != '\0')
+	if (!word) return false;
+
+	char * pStr = word;
+	while (curr && *pStr != '\0')
 	{
-		curr = curr->Next[tolower(*word) - 'a'];
-		word++;
+		curr = curr->Next[tolower(*pStr) - 'a'];
+		pStr++;
 	}
 
-	if (curr == nullptr && word && *word != '\0')
+	if (curr == nullptr || !(curr && curr->IsWordBitFlagSet(tolower(word[strlen(word) - 1] - 'a'))))
 	{
 		printf("\n%s is not a word in the dictionary", str);
 		return false;
@@ -109,6 +136,7 @@ int main()
 	Dictionary->IsWord("Adrian");
 	Dictionary->IsWord("adrianMa");
 	Dictionary->IsWord("a");
+	Dictionary->IsWord("adria");
 	Dictionary->IsWord("Hello");
 	
 

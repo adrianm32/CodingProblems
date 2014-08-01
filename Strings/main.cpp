@@ -239,6 +239,27 @@ void AreAnagramsUsingQuickSort(char * str1, char * str2)
 	cout <<  " are anagrams \n";
 }
 
+
+void DisplayArrayOfStrings(char strings [] [10], int n)
+{
+
+	for (int i = 0; i < n; i++)
+	{
+		printf("\n %s" , strings[i]);
+	}
+
+}
+
+void DisplayArrayOfStrings1(char** strings, int n)
+{
+
+	for (int i = 0; i < n; i++)
+	{
+		printf("\n %s", strings[i]);
+	}
+
+}
+
 int main()
 {
 
@@ -273,6 +294,13 @@ int main()
 	//cannot enter UTF chars inside source file. Embedding them directly. This contains 4 chars.
 	char strUTF[] = {0x24, 0xC2, 0xA2, 0xE2, 0x82, 0xAC, 0xF0, 0xA4, 0xAD, 0xA2, '\0'};
 	printf("\n strlen(%s) = %d", strUTF, StrlenUTF8(strUTF));
+
+
+	char strings[10][10] = { "Hello", "Adrian" };
+	DisplayArrayOfStrings(strings, 2);
+
+	char * strings1[2] = { "Hello", "Adrian" };
+	DisplayArrayOfStrings1(strings1, 2);
 
 
 	int n;
