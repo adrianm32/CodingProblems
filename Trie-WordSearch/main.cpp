@@ -5,7 +5,7 @@ using namespace std;
 typedef struct NODE
 {
 private :
-	int IsWordBitFlag = 0;
+	unsigned IsWordBitFlag: 26; 
 
 public:
 	NODE* Next[26];
@@ -18,7 +18,7 @@ public:
 
 	bool IsWordBitFlagSet(int bitPosition)
 	{
-		return IsWordBitFlag &= (1 << (sizeof(int)* 8 - 1)) >> bitPosition;;
+		return (IsWordBitFlag &= (1 << (sizeof(int)* 8 - 1)) >> bitPosition);
 
 	}
 
