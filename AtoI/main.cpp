@@ -150,6 +150,34 @@ HRESULT IToA(_In_ int num, _In_  int buffLen, _Out_ char ** buff)
 }
 
 
+char *  IToA2(char * pBuff, int num)
+{
+	bool isNegative = num < 0;
+
+	pBuff += 12; //-1 000 000 000 \0  = 12 chars
+	*--pBuff = '\0';   //using decrement first it is easier to keep track of pBuff ptr at end of loop since it will always be on valid curr position. Else we will need a if loop for IsNegative to increment pBuff if it is not negative and return that.
+
+	int digit = abs(num % 10);  //do abs to get rid of minus sign if neg and avoid havin to call abs each time in the loop.
+	num = abs(num / 10);   //in case of INTMIN, reduce number first and then take abs. the abs then takes care of the minus sign.
+	*--pBuff = digit + '0';
+	
+
+	while (num > 0)
+	{
+		digit = num % 10;   
+		num = num / 10;
+
+		*--pBuff = digit + '0';
+	} 
+
+	if (isNegative)
+	{
+		*--pBuff = '-';
+	}
+
+	return pBuff;
+}
+
 void PrintNum(char * str)
 {
 	int num;
@@ -160,14 +188,22 @@ void PrintNum(char * str)
 		printf("\n%s => Invalid Number", str);
 }
 
-void PrintString(int num)
+void PrintString(int num, bool flag = false)
 {
-	char buff[13];  //INT_MAX has 11 characters + 1 more for sign + 1 for '\0' = 13 characters max is needed for buffer size.
+	char buff[12];  //INT_MAX has 10 characters + 1 more for sign + 1 for '\0' = 12 characters max is needed for buffer size.
 
 	char * buffPtr = buff;
 
-	if (IToA(num, 13, &buffPtr)) //passing by ref
-		printf("\n%d => %s", num, buffPtr);
+	if (!flag)
+	{
+		if (IToA(num, 12, &buffPtr)) //passing by ref
+			printf("\n%d => %s", num, buffPtr);
+	}
+	else
+	{
+			printf("\n%d => %s", num, IToA2(buff, num));
+	}
+	
 }
 
 
@@ -193,6 +229,12 @@ int main()
 	PrintString(INT_MIN); //special case to handle overflow
 	PrintString(INT_MAX);
 
+
+	//ItoA2
+	PrintString(123, true);
+	PrintString(-123, true);
+	PrintString(INT_MIN, true); //special case to handle overflow
+	PrintString(INT_MAX, true);
 
 	cin >> num;
 
