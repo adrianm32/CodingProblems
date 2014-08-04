@@ -102,7 +102,7 @@ HRESULT AtoI(_In_ char* buff, _Out_ int& num)   //passing by ref
 
 
 //In place change and update buff pointer.  Else will have to calculate lenght of int or will have to use stack to pop digits in reverse.
-HRESULT IToA(_In_ int num, _In_  int buffLen, _Inout_ char ** buff)
+HRESULT IToA(_In_ int num, _In_range_(12, _MAX_PATH)  int buffLen, _Inout_ char ** buff)
 {
 	bool isNegative = false;
 	bool isOverflowing = false;
@@ -153,7 +153,7 @@ HRESULT IToA(_In_ int num, _In_  int buffLen, _Inout_ char ** buff)
 }
 
 
-char *  IToA2(char * pBuff, int num)
+char *  IToA2(_Inout_z_count_(12) char * pBuff, _In_ int num)
 {
 	bool isNegative = num < 0;
 
