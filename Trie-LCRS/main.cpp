@@ -83,7 +83,7 @@ void Trie::Insert(_In_ char * pStr)
 }
 
 
-bool Trie::IsWord(char * pStr)
+bool Trie::IsWord(_In_ char * pStr)
 {
 
 	if (pStr == nullptr)

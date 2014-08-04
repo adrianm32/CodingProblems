@@ -66,7 +66,7 @@ IsBST	          : This is bubbled up from children subtrees and used by current 
 LargestBSTChildrenCount: This is bubbled up from children subtrees and used to track largest BST under current node.
 LargestBSTSubtreeRoot: This is information that is bubbled up from the subtrees and used to track largest BST under current node.
 */
-void FindLargestBSTSubtreeRecursive(_In_ NODE * node, _In_ int* minValue, _In_ int* maxValue, _Out_ bool * IsBST, _Out_ int* LargestBSTChildrenCount, _Outptr_ NODE ** LargestBSTSubtreeRoot)
+void FindLargestBSTSubtreeRecursive(_In_ NODE * node, _In_ int* minValue, _In_ int* maxValue, _Out_ bool * IsBST, _Out_ int* LargestBSTChildrenCount, _Outptr_result_maybenull_ NODE ** LargestBSTSubtreeRoot)
 {
 	bool isLeftBST = true, isRightBST = true;
 	int leftLargestBSTChildrenCount = 0, rightLargestBSTChildrenCount = 0;
@@ -144,7 +144,7 @@ NODE * FindLargestBSTSubtree(NODE * Root)
 	NODE * LargestBSTSubtree = nullptr;
 	int largestBSTChildrenCount = 0;
 	bool isBST = false;
-	int minValue, maxValue;
+	int minValue = 0, maxValue = 0;
 
 	FindLargestBSTSubtreeRecursive(Root, &minValue, &maxValue, &isBST, &largestBSTChildrenCount, &LargestBSTSubtree);
 

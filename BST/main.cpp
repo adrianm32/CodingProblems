@@ -390,13 +390,16 @@ public:
 					curr = stack.top();  //just peek, dont pop here.
 					if (!prev || prev->Left == curr || prev->Right == curr)  //traversing down, if prev == null or curr is left/right child of prev
 					{
-						if (curr->Left)   //traverse  down left if there is a left node
+						if (curr)
 						{
-							stack.push(curr->Left);
-						}
-						else if (curr->Right)   //traverse  down right if there is a right node
-						{
-							stack.push(curr->Right);
+							if (curr->Left)   //traverse  down left if there is a left node
+							{
+								stack.push(curr->Left);
+							}
+							else if (curr->Right)   //traverse  down right if there is a right node
+							{
+								stack.push(curr->Right);
+							}
 						}
 					}
 					else if (curr->Left == prev)  //traversing up from left

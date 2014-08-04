@@ -47,6 +47,7 @@ HRESULT AtoI(_In_ char* buff, _Out_ int& num)   //passing by ref
 {
 	bool isNegative = false;
 	int result = 0;
+	num = -1;  // return initialized memory even in case of failure. This value should be discarded if HRESULT is E_FAIL.
 
 	if (!buff || *buff == '\0') return E_FAIL;
 
@@ -101,10 +102,12 @@ HRESULT AtoI(_In_ char* buff, _Out_ int& num)   //passing by ref
 
 
 //In place change and update buff pointer.  Else will have to calculate lenght of int or will have to use stack to pop digits in reverse.
-HRESULT IToA(_In_ int num, _In_  int buffLen, _Out_ char ** buff)
+HRESULT IToA(_In_ int num, _In_  int buffLen, _Inout_ char ** buff)
 {
 	bool isNegative = false;
 	bool isOverflowing = false;
+
+	if (buff == nullptr || *buff == nullptr) return E_FAIL;
 
 	if (num < 0)
 	{
@@ -182,7 +185,7 @@ void PrintNum(char * str)
 {
 	int num;
 
-	if (AtoI(str, num)) //passing by ref
+	if (AtoI(str, num) == S_OK) //passing by ref
 		printf("\n%s => %d", str, num);
 	else
 		printf("\n%s => Invalid Number", str);
@@ -190,14 +193,14 @@ void PrintNum(char * str)
 
 void PrintString(int num, bool flag = false)
 {
-	char buff[12];  //INT_MAX has 10 characters + 1 more for sign + 1 for '\0' = 12 characters max is needed for buffer size.
+	char buff[12] = {};  //INT_MAX has 10 characters + 1 more for sign + 1 for '\0' = 12 characters max is needed for buffer size.
 
-	char * buffPtr = buff;
+	char * pBuff = buff;
 
 	if (!flag)
 	{
-		if (IToA(num, 12, &buffPtr)) //passing by ref
-			printf("\n%d => %s", num, buffPtr);
+		if (IToA(num, 12, &pBuff) == S_OK) //passing by ref
+			printf("\n%d => %s", num, pBuff);
 	}
 	else
 	{
