@@ -7,7 +7,7 @@ typedef long HRESULT;
 #define E_FAIL   0x0L
 
 
-bool isValidNumber(char ch)
+_Check_return_ bool isValidNumber(_In_ char ch)
 {
 	if (ch < '0' || ch > '9')
 	{
@@ -16,7 +16,7 @@ bool isValidNumber(char ch)
 	return true;
 }
 
-bool CheckForIntegerOverflowMultiplication(int a, int b)
+bool CheckForIntegerOverflowMultiplication(_In_ int a, _In_ int b)
 {
 	if (INT_MAX / a <= b)
 		return true;
@@ -102,7 +102,7 @@ HRESULT AtoI(_In_ char* buff, _Out_ int& num)   //passing by ref
 
 
 //In place change and update buff pointer.  Else will have to calculate lenght of int or will have to use stack to pop digits in reverse.
-HRESULT IToA(_In_ int num, _In_range_(12, _MAX_PATH)  int buffLen, _Inout_ char ** buff)
+HRESULT IToA(_In_ int num, _In_range_(12, _MAX_PATH)  int buffLen, _Inout_z_count_(buffLen) char ** buff)
 {
 	bool isNegative = false;
 	bool isOverflowing = false;
@@ -181,7 +181,7 @@ char *  IToA2(_Inout_z_count_(12) char * pBuff, _In_ int num)
 	return pBuff;
 }
 
-void PrintNum(char * str)
+void PrintNum(_In_ char * str)
 {
 	int num;
 
@@ -191,7 +191,7 @@ void PrintNum(char * str)
 		printf("\n%s => Invalid Number", str);
 }
 
-void PrintString(int num, bool flag = false)
+void PrintString(_In_ int num, _In_opt_ bool flag = false)
 {
 	char buff[12] = {};  //INT_MAX has 10 characters + 1 more for sign + 1 for '\0' = 12 characters max is needed for buffer size.
 

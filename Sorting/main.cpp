@@ -36,6 +36,9 @@ void DisplayItems(int items[], int length)
 }
 
 
+
+#pragma region Bubble Sort
+
 /*********************************************************************************
 
 							BUBBLE SORT
@@ -81,7 +84,10 @@ void BubbleSort(int * items, int length)
 
 }
 
+#pragma endregion
 
+
+#pragma region Insertion Sort
 /*********************************************************************************
 
 						INSERTION SORT
@@ -126,6 +132,10 @@ void InsertionSort(int * items, int length)
 
 }
 
+#pragma endregion
+
+
+#pragma region Selection Sort
 
 /*********************************************************************************
 
@@ -176,6 +186,11 @@ void SelectionSort(int * items, int length)
 
 }
 
+#pragma endregion
+
+
+#pragma region Variation of Selection sort
+
 /*********************************************************************************
 
 							VARITION OF SELECTION SORT
@@ -213,6 +228,11 @@ void SomeSort(int * items, int length)
 
 
 }
+
+#pragma endregion 
+
+
+#pragma region Heap Sort
 
 /*********************************************************************************
 
@@ -393,6 +413,11 @@ void HeapSort(int * items, int length, HeapifyBuildOrder heapifyOrder = BottomUp
 
 }
 
+#pragma endregion
+
+
+#pragma region Binary Search
+
 /********************************************************************
 
 				BINARY SEARCH
@@ -425,6 +450,9 @@ void BinarySearch(int * items, int length, int item)
 	printf("\n Did not find item %d \n", item);
 
 }
+
+#pragma endregion
+
 
 int main()
 {

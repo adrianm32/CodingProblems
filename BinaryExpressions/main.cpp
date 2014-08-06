@@ -84,7 +84,7 @@ int NODE::Value()
 }
 
 
-bool HasHigherPrecedence(char op1, char op2)
+_Check_return_ bool HasHigherPrecedence(_In_ char op1, _In_ char op2)
 {
 	std::string operators = "(+-*/";
 
@@ -95,7 +95,7 @@ bool HasHigherPrecedence(char op1, char op2)
 
 
 // 1 + 2 * 3 + 5   =>  1 2 3 * 5 + +
-void InfixToPostfix(_In_ char * infix, _Out_ char * postfix)
+void InfixToPostfix(_In_z_ char * infix, _Out_ char * postfix)
 {
 	stack<char> opStack;
 	bool addspace = false;
@@ -162,7 +162,7 @@ void InfixToPostfix(_In_ char * infix, _Out_ char * postfix)
 }
 
 
-NODE* PostfixToTree(std::string postfix)
+_Maybenull_ NODE* PostfixToTree(_In_ std::string postfix)
 {
 	istringstream istr(postfix);
 	char token;
@@ -221,7 +221,7 @@ enum TraverseOrder
 	PostOrder
 } ;
 
-void TraverseTree(NODE* node, TraverseOrder traverseOrder)
+void TraverseTree(_In_opt_ NODE* node, _In_ TraverseOrder traverseOrder)
 {
 	switch (traverseOrder)
 	{
@@ -266,7 +266,7 @@ void TraverseTree(NODE* node, TraverseOrder traverseOrder)
 
 
 
-int EvaluatePostfix(string postfix)
+int EvaluatePostfix(_In_ string postfix)
 {
 	istringstream istr(postfix);
 
@@ -354,7 +354,7 @@ start from reverse end of string moving backwards.
 
 */
 
-void InfixToPrefix(char * infix, char * prefix)
+void InfixToPrefix(_In_z_ char * infix, _Out_ char * prefix)
 {
 
 	stack<char> prefixStack, operatorStack;
