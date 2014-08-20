@@ -181,17 +181,20 @@ char *  IToA2(_Inout_z_count_(12) char * pBuff, _In_ int num)
 	return pBuff;
 }
 
-void PrintNum(_In_ char * str)
+void TestAToI(_In_ char * pStr)
 {
 	int num;
 
-	if (AtoI(str, num) == S_OK) //passing by ref
-		printf("\n%s => %d", str, num);
+	if (AtoI(pStr, num) == S_OK) //passing by ref
+	{
+		printf("\n%s => %d", pStr, num);
+		_ASSERT(atoi(pStr) == num);
+	}
 	else
-		printf("\n%s => Invalid Number", str);
+		printf("\n%s => Invalid Number", pStr);
 }
 
-void PrintString(_In_ int num, _In_opt_ bool flag = false)
+void TestIToA(_In_ int num, _In_opt_ bool flag = false)
 {
 	char buff[12] = {};  //INT_MAX has 10 characters + 1 more for sign + 1 for '\0' = 12 characters max is needed for buffer size.
 
@@ -200,11 +203,20 @@ void PrintString(_In_ int num, _In_opt_ bool flag = false)
 	if (!flag)
 	{
 		if (IToA(num, 12, &pBuff) == S_OK) //passing by ref
+		{
 			printf("\n%d => %s", num, pBuff);
+			char tempBuff[12] = {};
+			_itoa_s(num, tempBuff, 10);
+			_ASSERT(strncmp(tempBuff, pBuff, strlen(pBuff)) == 0);
+		}
 	}
 	else
 	{
-			printf("\n%d => %s", num, IToA2(buff, num));
+			printf("\n%d => %s", num, IToA2(pBuff, num));
+			char tempBuff[12] = {};
+			_itoa_s(num, tempBuff, 10);
+			_ASSERT(strncmp(tempBuff, pBuff, strlen(pBuff)) == 0);
+
 	}
 	
 }
@@ -215,30 +227,32 @@ int main()
 	int num;
 
 	//AtoI
-	PrintNum("123");
-	PrintNum("-123");
-	PrintNum("--123");
-	PrintNum("+123");
-	PrintNum("		+123");
-	PrintNum("000");
-	PrintNum("+000123");
-	PrintNum("-000123");
-	PrintNum("2147483648");
+	TestAToI("123");
+	TestAToI("-123");
+	TestAToI("--123");
+	TestAToI("+123");
+	TestAToI("		+123");
+	TestAToI("000");
+	TestAToI("+000123");
+	TestAToI("-000123");
+	TestAToI("2147483648");
 
 
 	//ItoA
-	PrintString(123);
-	PrintString(-123);
-	PrintString(INT_MIN); //special case to handle overflow
-	PrintString(INT_MAX);
+	TestIToA(123);
+	TestIToA(-123);
+	TestIToA(INT_MIN); //special case to handle overflow
+	TestIToA(INT_MAX);
 
 
 	//ItoA2
-	PrintString(123, true);
-	PrintString(-123, true);
-	PrintString(INT_MIN, true); //special case to handle overflow
-	PrintString(INT_MAX, true);
+	TestIToA(123, true);
+	TestIToA(-123, true);
+	TestIToA(INT_MIN, true); //special case to handle overflow
+	TestIToA(INT_MAX, true);
 
+
+	printf_s("\n\nAll Tests Passed!");
 	cin >> num;
 
 }

@@ -161,6 +161,7 @@ void Test(char * pInput)
 	Bits5to8Decompression(pCompressedOutput, compressedLength, &pDecompressedOutput, &decompressedLength);
 	printf_s("DeCompressed String: %s, Len: %d, Size: %d\n", pDecompressedOutput, strnlen_s(pDecompressedOutput, _MAX_PATH), decompressedLength + 1);
 
+	_ASSERT(strncmp(pInput, pDecompressedOutput , strlen(pInput)) == 0);
 	printf_s("\n\n");
 
 }
@@ -186,7 +187,7 @@ int main()
 	Test("aaaattttbbbbqqqqr");
 
 
-
+	printf_s("\n\nAll Tests Passed!");
 	int n;
 	cin >> n;
 

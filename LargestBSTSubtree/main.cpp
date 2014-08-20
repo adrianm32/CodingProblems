@@ -306,6 +306,8 @@ void TestGivenSample()
 	printf("\nLargest BST Subtree tree: \n");
 	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
+
+	_ASSERT(largestBSTSubtree->Value == 13);
 }
 
 void TestNullRoot()
@@ -316,6 +318,9 @@ void TestNullRoot()
 	printf("\nLargest BST Subtree tree: \n");
 	NODE * largestBSTSubtree = FindLargestBSTSubtree(nullptr);
 	DisplayTree(largestBSTSubtree);
+
+	_ASSERT(largestBSTSubtree == nullptr);
+
 }
 
 
@@ -328,6 +333,9 @@ void TestTreeWithOnlyRoot()
 	printf("\nLargest BST Subtree tree: \n");
 	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
+
+	_ASSERT(largestBSTSubtree->Value == 5);
+
 }
 
 void TestTreeWithOnlyLeftChildren()
@@ -339,6 +347,9 @@ void TestTreeWithOnlyLeftChildren()
 	printf("\nLargest BST Subtree tree: \n");
 	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
+
+	_ASSERT(largestBSTSubtree->Value == 5);
+
 }
 
 void TestTreeWithOnlyRightChildren()
@@ -350,6 +361,9 @@ void TestTreeWithOnlyRightChildren()
 	printf("\nLargest BST Subtree tree: \n");
 	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
+
+	_ASSERT(largestBSTSubtree->Value == 5);
+
 }
 void TestLeafBSTTreeFound()
 {
@@ -360,6 +374,8 @@ void TestLeafBSTTreeFound()
 	printf("\nLargest BST Subtree tree: \n");
 	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
+
+	_ASSERT(largestBSTSubtree->Value == 20);
 }
 
 void TestFullTreeAsBST()
@@ -371,6 +387,8 @@ void TestFullTreeAsBST()
 	printf("\nLargest BST Subtree tree: \n");
 	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
+
+	_ASSERT(largestBSTSubtree->Value == 9);
 }
 
 void TestLargerBSTTreeOnRight()
@@ -382,6 +400,9 @@ void TestLargerBSTTreeOnRight()
 	printf("\nLargest BST Subtree tree: \n");
 	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
+
+	_ASSERT(largestBSTSubtree->Value == 13);
+
 }
 
 void TestLargerBSTTreeOnLeft()
@@ -393,6 +414,9 @@ void TestLargerBSTTreeOnLeft()
 	printf("\nLargest BST Subtree tree: \n");
 	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
+
+	_ASSERT(largestBSTSubtree->Value == 6);
+
 }
 
 //Algorithm will pick right BST
@@ -405,6 +429,8 @@ void TestEqualSizedBSTsOnLeftAndRight()
 	printf("\nLargest BST Subtree tree: \n");
 	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
+
+	_ASSERT(largestBSTSubtree->Value == 15);
 }
 
 
@@ -433,6 +459,7 @@ int main()
 
 	TestEqualSizedBSTsOnLeftAndRight();
 
+	printf_s("\n\nAll Tests Passed!");
 	int n;
 	std::cin >> n;
 

@@ -464,13 +464,16 @@ int main()
 	BSTInt->Insert(items, _countof(items)); // have to pass in count since when we pass in int[] , it gets converted to int * and _countof does not like int *
 	BSTInt->DisplayTree();
 	printf("\nThe tree is a BST : %s\n\n", BSTInt->IsBST()? "True" : "False");
+	_ASSERT(BSTInt->IsBST());
 	printf("\nThe tree is a BST (Bottom Up) : %s\n\n", BSTInt->IsBSTBottomUp() ? "True" : "False");
+	_ASSERT(BSTInt->IsBSTBottomUp());
 
 
 	int items2[5] = { 18, 5, 13, 17, 6 };
 	BSTInt->Insert(items2, _countof(items2));
 	BSTInt->DisplayTree();
 	printf("\nThe tree is a BST : %s\n\n", BSTInt->IsBST() ? "True" : "False");
+	_ASSERT(BSTInt->IsBST());
 
 	/* The auto keyword is a declaration specifier. However, the C++ standard defines an original and a revised meaning for this keyword.
 	Before Visual C++ 2010, the auto keyword declares a variable in the automatic storage class; that is, a variable that has a local lifetime.
@@ -481,6 +484,7 @@ int main()
 	t1->Value = 5; t2->Value = 3;
 	BSTInt->DisplayTree();
 	printf("\nThe tree is a BST : %s\n\n", BSTInt->IsBST() ? "True" : "False");
+	_ASSERT(!BSTInt->IsBST());
 	t1->Value = 3; t2->Value = 5;
 
 
@@ -488,16 +492,22 @@ int main()
 	BSTInt->Delete(4);
 	BSTInt->DisplayTree();
 	printf("\nThe tree is a BST : %s\n\n", BSTInt->IsBST() ? "True" : "False");
+	_ASSERT(BSTInt->IsBST());
+
 
 	printf("Deleting 6 \n");
 	BSTInt->Delete(6);
 	BSTInt->DisplayTree();
 	printf("\nThe tree is a BST : %s\n\n", BSTInt->IsBST() ? "True" : "False");
+	_ASSERT(BSTInt->IsBST());
+
 
 	printf("Deleting 2 \n");
 	BSTInt->Delete(2);
 	BSTInt->DisplayTree();
 	printf("\nThe tree is a BST : %s\n\n", BSTInt->IsBST() ? "True" : "False");
+	_ASSERT(BSTInt->IsBST());
+
 
 
 	printf("\nPreOrder Traversal:");
@@ -525,8 +535,10 @@ int main()
 	BSTChar->Insert(itemsChar, _countof(itemsChar)); 
 	BSTChar->DisplayTree();
 	printf("\nThe tree is a BST : %s\n\n", BSTChar->IsBST('A' - 1, 'Z' + 1) ? "True" : "False");
+	_ASSERT(BSTChar->IsBST('A' - 1, 'Z' + 1));
 
 
+	printf_s("\n\nAll Tests Passed!");
 	int n;
 	std::cin >> n;
 

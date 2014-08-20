@@ -1,11 +1,14 @@
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
+class Trie;
 typedef struct NODE
 {
+	friend class Trie;
 private :
-	unsigned IsWordBitFlag: 26; 
+	unsigned int IsWordBitFlag; 
 
 public:
 	NODE* Next[26];
@@ -14,6 +17,8 @@ public:
 	{
 		for (int i = 0; i < 26; i++)
 			Next[i] = nullptr;
+
+		IsWordBitFlag = 0;
 	}
 
 	bool IsWordBitFlagSet(int bitPosition)
@@ -26,7 +31,47 @@ public:
 	{
 		IsWordBitFlag |= (1 << (sizeof(int)* 8 - 1)) >> bitPosition;
 	}
+
+	void UnsetWordBitFlag(int bitPosition)
+	{
+		IsWordBitFlag &= ~((1 << (sizeof(int)* 8 - 1)) >> bitPosition);
+	}
+
+	bool HasChildren()
+	{
+		for (int i = 0; i < 26; i++)
+		{
+			if (Next[i])
+			{
+				return true;
+			}
+		}
+			
+		return false;
+	}
 } NODE;
+
+struct Visitor
+{
+public:
+	virtual void Visit(NODE * pNode) = 0;
+
+};
+
+class DeleteVisitor : public Visitor
+{
+private:
+
+public:
+	stack<NODE *> stack;
+
+	void Visit(NODE * pNode) override
+	{
+		stack.push(pNode);
+	}
+
+};
+
 
 class Trie
 {
@@ -35,112 +80,211 @@ private:
 
 public:
 	Trie() : Root(nullptr) {}
-	virtual void Insert(_In_ char* word);
-	virtual bool IsWord(_In_ char* word);
+	void Insert(_In_ char* pWord);
+	bool IsWord(_In_ char* pWord, _In_opt_ Visitor * pVisitor = nullptr);
+	void DeleteWord(_In_ char * pWord);
 };
 
-bool IsWordValid(_In_ char * word)
+bool IsWordValid(_In_ char * pWord)
 {
 	//could also use isAlpha from ctype.h
-	if (!word) return false;
+	if (!pWord) return false;
 
-	while (word && *word != '\0')
+	while (pWord && *pWord != '\0')
 	{
-		if (tolower(*word) < 'a' || tolower(*word) > 'z')
+		if (tolower(*pWord) < 'a' || tolower(*pWord) > 'z')
 			return false;
 		else
-			word++;
+			pWord++;
 	}
 
 	return true;
 }
 
-void Trie::Insert(_In_ char* word)
+void Trie::Insert(_In_ char* pWord)
 {
-	NODE * curr = this->Root;  //set curr to Root
+	NODE * pCurr = this->Root;  //set curr to Root
 	NODE * temp = nullptr;
 	
-	if (!word) return;
+	if (!pWord || *pWord == '\0') return;
 
-	if (!IsWordValid(word)) return; //bail out if not valid word.
+	if (!IsWordValid(pWord)) return; //bail out if not valid word.
 	
 	if (this->Root == nullptr)   //initialize root if not already and set curr to Root
 	{
-		this->Root = curr = new NODE();
+		this->Root = pCurr = new NODE();
 	}
 
-	char * pStr = word;
-	while (*pStr != '\0')
+	int len = strlen(pWord);
+	int prefix = tolower(pWord[0]) - 'a';
+	for (int i = 1; i < len; i++)
 	{
-		temp = curr->Next[tolower(*pStr) - 'a'];
+		temp = pCurr->Next[prefix];
 		if (temp == nullptr)
 		{
-			curr->Next[tolower(*pStr) - 'a'] = temp = new NODE();
+			pCurr->Next[prefix] = temp = new NODE();
 		}
-		curr = temp;
+		pCurr = temp;
+		prefix = tolower(pWord[i]) - 'a';
 
-		pStr++;
 	}
 
 	//Set IsWordBitFlag
-	curr->SetWordBitFlag(tolower(word[strlen(word) - 1] - 'a'));
+	pCurr->SetWordBitFlag(prefix);
 
 }
 
-bool Trie::IsWord(_In_ char* word)
+bool Trie::IsWord(_In_ char* pWord, _In_opt_ Visitor * pVisitor)
 {
-	NODE* curr = this->Root;
-	char * str = word;
-	bool IsWord = false;
-
-	if (!word) return false;
-
-	char * pStr = word;
-	while (curr && *pStr != '\0')
+	NODE* pCurr = this->Root;
+	if (pVisitor)
 	{
-		curr = curr->Next[tolower(*pStr) - 'a'];
-		pStr++;
+		pVisitor->Visit(pCurr);
 	}
 
-	if (curr == nullptr || !(curr && curr->IsWordBitFlagSet(tolower(word[strlen(word) - 1] - 'a'))))
+	if (!pWord || *pWord == '\0') return false;
+
+	int len = strlen(pWord);
+	int prefix = tolower(pWord[0]) - 'a';
+
+	for (int i = 1; i < len; i++)
 	{
-		printf("\n%s is not a word in the dictionary", str);
-		return false;
+		pCurr = pCurr->Next[prefix];
+		if (pVisitor)
+		{
+			pVisitor->Visit(pCurr);
+		}
+
+		prefix = tolower(pWord[i]) - 'a';
+
+		if (pCurr == nullptr)
+		{
+			return false;
+		}
 	}
-	else
+
+	return pCurr->IsWordBitFlagSet(prefix);
+}
+
+void Trie::DeleteWord(_In_ char * pWord)
+{
+	DeleteVisitor visitor;
+	if (!IsWord(pWord, &visitor))
 	{
-		printf("\n%s is a word in the dictionary", str);
-		return true;
+		return;
+	}
+
+	stack<NODE *> stack = visitor.stack;
+
+	NODE * pCurr = stack.top(); stack.pop();
+
+	int length = strlen(pWord);
+	pCurr->UnsetWordBitFlag(pWord[length - 1] - 'a');
+
+	for (int i = length - 2; i >= 0; i--)
+	{
+		if (pCurr->HasChildren() || pCurr->IsWordBitFlag)
+		{
+			break;
+		}
+		else
+		{
+			delete pCurr;
+			pCurr = stack.top(); stack.pop();
+			pCurr->Next[pWord[i] - 'a'] = nullptr;
+		}
+	}
+
+	while (!stack.empty())
+	{
+		stack.top(); stack.pop();
 	}
 }
 
 
-class TrieWithBitFlags : public Trie
+void TestInsert()
 {
-private:
+	Trie* trie = new Trie();
 
-public:
-	virtual void Insert(_In_ char* word) override;
-	virtual bool IsWord(_In_ char* word) override;
+	trie->Insert("Adrian");
+	trie->Insert("Apple");
+	trie->Insert("AdrianMa");
+	trie->Insert("catapult");
+	trie->Insert("cater");
+	trie->Insert("cataract");
+	trie->Insert("catamaran");
+	trie->Insert("catamarans");
 
-};
+	_ASSERT(trie->IsWord("Adrian"));
+	_ASSERT(!trie->IsWord("Ad"));
+	_ASSERT(trie->IsWord("AdrianMa"));
+	_ASSERT(trie->IsWord("Apple"));
+	_ASSERT(trie->IsWord("catamaran"));
+	_ASSERT(trie->IsWord("cater"));
+	_ASSERT(!trie->IsWord("pupil"));
 
 
+
+}
+
+void TestDelete()
+{
+	Trie* trie = new Trie();
+
+	trie->Insert("Adrian");
+	trie->Insert("Apple");
+	trie->Insert("AdrianMa");
+	trie->Insert("catapult");
+	trie->Insert("cater");
+	trie->Insert("cataract");
+	trie->Insert("catamaran");
+	trie->Insert("catamarans");
+
+
+	_ASSERT(trie->IsWord("catamaran"));
+	trie->DeleteWord("catamaran");  //should only unset flag
+	_ASSERT(!trie->IsWord("catamaran"));
+	_ASSERT(trie->IsWord("catamarans"));
+
+	trie->Insert("catamaran");  //add flag back.
+	trie->DeleteWord("catamarans");
+	_ASSERT(!trie->IsWord("catamarans"));
+	_ASSERT(trie->IsWord("catamaran"));
+
+	trie->DeleteWord("catamar"); //should not delete since catamar is not a word.
+	_ASSERT(trie->IsWord("catamaran"));
+	trie->DeleteWord("catermaran");
+	_ASSERT(trie->IsWord("cataract"));
+	_ASSERT(trie->IsWord("catapult"));
+
+	trie->Insert("catamaran");
+	trie->DeleteWord("catapult");  //delete first child
+	_ASSERT(trie->IsWord("catamaran")); //next sibling becomes first child
+	_ASSERT(trie->IsWord("cataract"));
+
+	trie->DeleteWord("cataract");  //delete last sibling
+	_ASSERT(trie->IsWord("catamaran"));
+
+
+	trie->DeleteWord("catamaran");  //delete only child 
+	_ASSERT(!trie->IsWord("catamaran"));
+	_ASSERT(trie->IsWord("cater"));
+
+	trie->DeleteWord("Adrian");
+	trie->DeleteWord("AdrianMa");
+	trie->DeleteWord("Apple");
+
+	_ASSERT(trie->IsWord("cater"));
+
+}
 
 int main()
 {
-	Trie* Dictionary = new Trie();
+	TestInsert();
 
-	Dictionary->Insert("Adrian");
-	Dictionary->Insert("AdrianMa");
-	Dictionary->IsWord("Adrian");
-	Dictionary->IsWord("adrianMa");
-	Dictionary->IsWord("a");
-	Dictionary->IsWord("adria");
-	Dictionary->IsWord("Hello");
-	
+	TestDelete();
 
-
+	printf_s("\n\nAll Tests Passed!");
 	int n;
 	cin >> n;
 

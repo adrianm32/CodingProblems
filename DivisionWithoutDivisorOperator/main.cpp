@@ -129,15 +129,7 @@ void Test(int numerator, int denominator)
 	int resultUsingDivisor = numerator / denominator;
 	int resultWithoutDivisor = DivideWithoutDivisor(numerator, denominator);
 
-
-	if (resultUsingDivisor == resultWithoutDivisor)
-	{
-		printf("\nPASSED %d / %d = %d   %d", numerator, denominator, resultUsingDivisor, resultWithoutDivisor);
-	}
-	else
-	{
-		printf("\nFAILED %d / %d = %d   %d", numerator, denominator, resultUsingDivisor, resultWithoutDivisor);
-	}
+	_ASSERT(resultUsingDivisor == resultWithoutDivisor);
 }
 
 
@@ -199,6 +191,7 @@ int main()
 	Test(-5, INT_MIN);
 
 
+	printf_s("\n\nAll Tests Passed!");
 	int n;
 	cin >> n;
 }
