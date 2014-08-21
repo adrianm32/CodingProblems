@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stack>
 #include <list>
+#include <algorithm>
 
 using namespace std;
 
@@ -350,6 +351,14 @@ void Trie::EditsImpl(_In_opt_ NODE * pTrieRoot, _In_ char * pWord, _In_ list<cha
 		//Insertion
 
 		//Transformation
+		char temp;
+		if (nWordLen >= 2)
+		{
+			temp = pWord[0]; pWord[0] = pWord[1]; pWord[1] = temp;  //swap 0 and 1
+			EditsImpl(pTrieRoot, pWord, pSuggestions, editDistance - 1);
+			temp = pWord[0]; pWord[0] = pWord[1]; pWord[1] = temp;  //swap back
+
+		}
 	}
 
 	// no edits have been made at this point. Advance to next char.
@@ -376,12 +385,23 @@ void Trie::EditsImpl(_In_opt_ NODE * pTrieRoot, _In_ char * pWord, _In_ list<cha
 
 }
 
+bool same_words(char * first, char * second)
+{
+	return (strncmp(first, second, _MAX_PATH) == 0);
+}
+
+bool sort_words(char * first, char * second)
+{
+	return (strncmp(first, second, _MAX_PATH) < 0 ? true : false);
+}
 list <char *> Trie::GetSuggestions(_In_ char * pWord, _In_ int nEditDistance)
 {
 
 	list<char *> suggestions;
 	EditsImpl(this->Root, pWord, &suggestions, nEditDistance);
 
+	suggestions.sort(sort_words);
+	suggestions.unique(same_words);
 	return suggestions;
 }
 
@@ -491,7 +511,6 @@ void TestDictionary()
 
 void DisplayList(_In_ list<char*> * pList)
 {
-	pList->unique();
 	for (list<char*>::iterator it = pList->begin(); it != pList->end(); it++)
 	{
 		printf_s("%s,", *it);
@@ -533,8 +552,13 @@ void TestSpellingSuggestionsWithEditDistance()
 		pTrie->Insert(words[i]);
 	}
 
-	DisplaySuggestions(pTrie, "that");
-	DisplaySuggestions(pTrie, "soonert");
+
+	char w1[] = "that";
+	DisplaySuggestions(pTrie, w1);
+	char w2[] = "soonert";
+	DisplaySuggestions(pTrie, w2);
+	char w3[] = "htat";
+	DisplaySuggestions(pTrie, w3);
 
 
 }
