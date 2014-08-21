@@ -421,6 +421,8 @@ void TestDictionary()
 	{
 		_ASSERT(strncmp(*it, words[i], strlen(words[i])) == 0);
 	}
+
+	_ASSERT(i, wordsList.size());
 }
 
 int main()
