@@ -327,35 +327,46 @@ list<char *> Trie::GetAllWords()
 }
 
 
-void Trie::EditsImpl(_In_opt_ NODE * pTrieRoot, _In_ char * pWord, _In_ list<char *> * pSuggestions, _In_ int editDistance)
+void Trie::EditsImpl(_In_opt_ NODE * pTrieRoot, _In_ char * pWord, _In_ list<char *> * pSuggestions, _In_ int nEditDistance)
 {
-	if (pTrieRoot != nullptr && pTrieRoot->bIsWord && *pWord == '\0' && editDistance >= 0)
+	if (pTrieRoot != nullptr && pTrieRoot->bIsWord && *pWord == '\0' && nEditDistance >= 0)
 	{
 		pSuggestions->push_back(pTrieRoot->pWord);
 	}
 
 	int nWordLen = strlen(pWord);
-	if (editDistance >= 1)
+	if (nEditDistance >= 1)
 	{
 
 		//deletion
 		if (nWordLen > 1)
 		{
-			EditsImpl(pTrieRoot, &pWord[1], pSuggestions, editDistance - 1);
+			EditsImpl(pTrieRoot, &pWord[1], pSuggestions, nEditDistance - 1);
 		}
 		else
 		{
-			EditsImpl(pTrieRoot, "", pSuggestions, editDistance - 1);
+			EditsImpl(pTrieRoot, "", pSuggestions, nEditDistance - 1);
 		}
 
-		//Insertion
+		//Insertion and  substitution
+		NODE * pCurr = pTrieRoot->Child;
+		while (pCurr)
+		{
+			//Insertion
+			EditsImpl(pCurr, pWord, pSuggestions, nEditDistance - 1);
 
-		//Transformation
+			//Substitution
+			EditsImpl(pCurr, &pWord[1], pSuggestions, nEditDistance - 1);
+
+			pCurr = pCurr->Sibling;
+		}
+
+		//Transposition (swap first and second letters)
 		char temp;
 		if (nWordLen >= 2)
 		{
 			temp = pWord[0]; pWord[0] = pWord[1]; pWord[1] = temp;  //swap 0 and 1
-			EditsImpl(pTrieRoot, pWord, pSuggestions, editDistance - 1);
+			EditsImpl(pTrieRoot, pWord, pSuggestions, nEditDistance - 1);
 			temp = pWord[0]; pWord[0] = pWord[1]; pWord[1] = temp;  //swap back
 
 		}
@@ -374,11 +385,11 @@ void Trie::EditsImpl(_In_opt_ NODE * pTrieRoot, _In_ char * pWord, _In_ list<cha
 		{
 			if (nWordLen > 1)
 			{
-				EditsImpl(pCurr, &pWord[1], pSuggestions, editDistance);
+				EditsImpl(pCurr, &pWord[1], pSuggestions, nEditDistance);
 			}
 			else
 			{
-				EditsImpl(pCurr, "", pSuggestions, editDistance);
+				EditsImpl(pCurr, "", pSuggestions, nEditDistance);
 			}
 		}
 	}
@@ -557,8 +568,11 @@ void TestSpellingSuggestionsWithEditDistance()
 	DisplaySuggestions(pTrie, w1);
 	char w2[] = "soonert";
 	DisplaySuggestions(pTrie, w2);
-	char w3[] = "htat";
+	char w3[] = "htat"; // transposition
 	DisplaySuggestions(pTrie, w3);
+
+	char w4[] = "hat"; // insertion 'that' , and substitution 'hit'
+	DisplaySuggestions(pTrie, w4);
 
 
 }
