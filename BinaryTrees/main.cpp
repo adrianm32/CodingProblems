@@ -17,6 +17,8 @@ struct NODE
 };
 
 
+#pragma region Algorithm 1 
+
 void FindCommonAncestorImpl(_In_ NODE * pNode, _In_opt_ NODE * pN1, _In_opt_ NODE *pN2, _Out_ bool * pFoundN1, _Out_ bool * pFoundN2, _Outptr_ NODE** ppCommonAncestor)
 {
 	if (pNode == nullptr) return;
@@ -79,6 +81,9 @@ NODE * FindCommonAncestor1(_In_ NODE * pRoot, _In_opt_ NODE * pN1, _In_opt_ NODE
 	return pCommonAncestor;
 }
 
+#pragma endregion
+
+#pragma region Algorithm 2  : Better concise algorithm
 
 NODE* FindCommonAncestor2(_In_ NODE * pRoot, _In_opt_ NODE * pN1, _In_opt_ NODE *pN2)
 {
@@ -89,20 +94,23 @@ NODE* FindCommonAncestor2(_In_ NODE * pRoot, _In_opt_ NODE * pN1, _In_opt_ NODE 
 
 	if (pRoot == pN1 || pRoot == pN2)
 	{
-		return pRoot;
+		return pRoot;   //return if node matches N1 or N2.
 	}
 
 	NODE* pLeft = FindCommonAncestor2(pRoot->pLeft, pN1, pN2);
 
 	NODE* pRight = FindCommonAncestor2(pRoot->pRight, pN1, pN2);
 
-	if (pLeft && pRight)
+	if (pLeft && pRight)  // if both left and right subtrees return something (N1 or N2), then this node must be common ancestor
 	{
 		return pRoot;
 	}
 
-	return pLeft ? pLeft : pRight;
+	return pLeft ? pLeft : pRight;  //else return whichever is not null (or null if both are null).
 }
+
+#pragma endregion
+
 
 typedef NODE* (*FindCommonAncestor) (_In_ NODE * pRoot, _In_opt_ NODE * pN1, _In_opt_ NODE *pN2);
 void TestCommonAncestor(FindCommonAncestor func)
