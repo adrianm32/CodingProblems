@@ -39,6 +39,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Trie-LCRS", "Trie-LCRS\Trie
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BitCompression", "BitCompression\BitCompression.vcxproj", "{ACD077AA-9591-4030-A942-913997737CFF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BinaryTrees", "BinaryTrees\BinaryTrees.vcxproj", "{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -379,6 +381,24 @@ Global
 		{ACD077AA-9591-4030-A942-913997737CFF}.Release|x64.ActiveCfg = Release|Win32
 		{ACD077AA-9591-4030-A942-913997737CFF}.Release|x86.ActiveCfg = Release|Win32
 		{ACD077AA-9591-4030-A942-913997737CFF}.Release|x86.Build.0 = Release|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Debug|ARM.ActiveCfg = Debug|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Debug|Win32.Build.0 = Debug|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Debug|x64.ActiveCfg = Debug|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Debug|x86.ActiveCfg = Debug|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Debug|x86.Build.0 = Debug|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Release|Any CPU.ActiveCfg = Release|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Release|ARM.ActiveCfg = Release|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Release|Win32.ActiveCfg = Release|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Release|Win32.Build.0 = Release|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Release|x64.ActiveCfg = Release|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Release|x86.ActiveCfg = Release|Win32
+		{5EFAD006-9697-4A05-BC5C-FF0E1EF01022}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
