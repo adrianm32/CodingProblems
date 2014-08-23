@@ -62,7 +62,7 @@ void FindCommonAncestorImpl(_In_ NODE * pNode, _In_opt_ NODE * pN1, _In_opt_ NOD
 	bool bRightFoundN2 = *pFoundN2;
 
 	
-	// N1 and N2 are now found in either left or right subtree, and eiter one or both were not found when we visited this node earlier.
+	// N1 and N2 are now found in either left or right subtree, and either one or both were not found when we visited this node earlier.
 	if (!bFoundN1 && !bFoundN2 && *pFoundN1 && *pFoundN2)
 	{
 		*ppCommonAncestor = pNode;
@@ -83,7 +83,9 @@ NODE * FindCommonAncestor1(_In_ NODE * pRoot, _In_opt_ NODE * pN1, _In_opt_ NODE
 
 #pragma endregion
 
-#pragma region Algorithm 2  : Better concise algorithm
+#pragma region Algorithm 2  : Better concise algorithm but longer worst case as it searches all nodes even if it found the node in one of the subtrees.
+
+//assumption N1 and N2 are both in the tree. This will traverse all nodes in the tree even if it found the nodes in the left subtree.
 
 NODE* FindCommonAncestor2(_In_ NODE * pRoot, _In_opt_ NODE * pN1, _In_opt_ NODE *pN2)
 {
@@ -166,6 +168,13 @@ void TestCommonAncestor(FindCommonAncestor func)
 
 	pCommonAncestor = func(pRoot, pRoot, pNode11);  //N2 is left descendant of N2
 	_ASSERT(pRoot->Value == 9);
+
+	if (func == FindCommonAncestor1)  //does not work for FindCommonAncestor2 as it assumes nodes are both in the tree.
+	{
+		pCommonAncestor = func(pRoot, pNode5, pTemp);  //node N2 not in tree.
+		_ASSERT(!pCommonAncestor);
+	}
+	
 }
 
 int main()
