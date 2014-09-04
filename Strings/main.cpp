@@ -3,7 +3,7 @@
 using namespace std;
 
 
-void IsPalindrome(char * str)
+void IsPalindrome(char *str)
 {
 	int len = strlen(str);
 	for (int i = 0, j = len-1; i < j; i++, j--)
@@ -58,7 +58,7 @@ U+010000-U+10ffff  11110zzz  000zzzzz yyyyyyyy xxxxxxxx
 
 ******************************************************************************/
 
-int StrlenUTF8(char * str)
+int StrlenUTF8(char *str)
 {
 	int count = 0;
 	int i = 0;
@@ -76,7 +76,7 @@ int StrlenUTF8(char * str)
 	return count;
 }
 
-void ReverseUTF8(char * str)
+void ReverseUTF8(char *str)
 {
 	cout << "\n " << str << "  (UTF8 Reversed) ";
 
@@ -103,7 +103,7 @@ void ReverseString(char *str , int displayOutput = 1)
 	if (displayOutput) { cout << str << "\n"; }
 }
 
-void ReverseWords(char * str)
+void ReverseWords(char *str)
 {
 	int len = strlen(str);
 
@@ -135,11 +135,11 @@ void ReverseWords(char * str)
 }
 
 
-void AreAnagrams(char * str1, char * str2)
+void AreAnagrams(char *str1, char *str2)
 {
 	int chars[26];
-	char * tempStr1 = str1;
-	char * tempStr2 = str2;
+	char *tempStr1 = str1;
+	char *tempStr2 = str2;
 	for (int i = 0; i < 26; i++)
 	{
 		chars[i] = 0;  //initialize to zero.
@@ -172,7 +172,7 @@ void AreAnagrams(char * str1, char * str2)
 }
 
 
-void Swap(char * a, char * b)
+void Swap(char *a, char *b)
 {
 	char temp = *a;
 	*a = *b;
@@ -211,7 +211,7 @@ void QuickSort(char str[], int startIndex, int endIndex)
 	}
 }
 
-void AreAnagramsUsingQuickSort(char * str1, char * str2)
+void AreAnagramsUsingQuickSort(char *str1, char *str2)
 {
 	int str1Len = strlen(str1);
 	int str2Len = strlen(str2);
@@ -250,7 +250,7 @@ void DisplayArrayOfStrings(char strings [] [10], int n)
 
 }
 
-void DisplayArrayOfStrings1(char** strings, int n)
+void DisplayArrayOfStrings1(char **strings, int n)
 {
 
 	for (int i = 0; i < n; i++)
@@ -299,7 +299,7 @@ int main()
 	char strings[10][10] = { "Hello", "Adrian" };
 	DisplayArrayOfStrings(strings, 2);
 
-	char * strings1[2] = { "Hello", "Adrian" };
+	char *strings1[2] = { "Hello", "Adrian" };
 	DisplayArrayOfStrings1(strings1, 2);
 
 

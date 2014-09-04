@@ -11,7 +11,7 @@ Then start backwards down to 0, putting characters where they eventually will en
 
 */
 
-void SimpleReplaceInPlace(char * buff, int len, int capacity)
+void SimpleReplaceInPlace(char *buff, int len, int capacity)
 {
 	//count of preceding dots helps calculate where current character will eventually end up in the buffer.
 	int counfOfDots = 0;
@@ -37,7 +37,7 @@ void SimpleReplaceInPlace(char * buff, int len, int capacity)
 	}
 }
 
-void GenericReplaceInPlace(char * buff, int len, int capacity, char * replacementString)
+void GenericReplaceInPlace(char *buff, int len, int capacity, char *replacementString)
 {
 	int counfOfDots = 0;
 	int replacementStringLength = strlen(replacementString);
@@ -51,16 +51,16 @@ void GenericReplaceInPlace(char * buff, int len, int capacity, char * replacemen
 	{
 		if (buff[i] == '.')
 		{
-			//calculated spot is f(numberofDots * (strlen(replacementString) - 1))
+			//calculated spot is f(numberofDots *(strlen(replacementString) - 1))
 			for (int j = replacementStringLength, k = 0; j > 0; j--, k++)
 			{
-				buff[i + counfOfDots * (replacementStringLength - 1) - k] = replacementString[j - 1];
+				buff[i + counfOfDots *(replacementStringLength - 1) - k] = replacementString[j - 1];
 			}
 			counfOfDots--;
 		}
 		else
 		{
-			buff[i + counfOfDots * (replacementStringLength - 1)] = buff[i];
+			buff[i + counfOfDots *(replacementStringLength - 1)] = buff[i];
 		}
 	}
 }

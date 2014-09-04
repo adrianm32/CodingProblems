@@ -29,7 +29,7 @@ using namespace std;
 struct NODE
 {
 	int Value;
-	NODE * Left, *Right;
+	NODE *Left, *Right;
 
 	NODE(int val) :
 		Value(val),
@@ -42,7 +42,7 @@ struct NODE
 
 
 
-void DisplayTree(NODE * node, int indent = 0, char* LR = "") //can specify default values for optional parameters.
+void DisplayTree(NODE *node, int indent = 0, char *LR = "") //can specify default values for optional parameters.
 {
 
 	//do in-order traversal in reverse to show the tree from left to right (instead of top down) and right (top) to left (bottom). 
@@ -66,11 +66,11 @@ IsBST	          : This is bubbled up from children subtrees and used by current 
 LargestBSTChildrenCount: This is bubbled up from children subtrees and used to track largest BST under current node.
 LargestBSTSubtreeRoot: This is information that is bubbled up from the subtrees and used to track largest BST under current node.
 */
-void FindLargestBSTSubtreeRecursive(_In_ NODE * node, _In_ int* minValue, _In_ int* maxValue, _Out_ bool * IsBST, _Out_ int* LargestBSTChildrenCount, _Outptr_result_maybenull_ NODE ** LargestBSTSubtreeRoot)
+void FindLargestBSTSubtreeRecursive(_In_ NODE *node, _In_ int *minValue, _In_ int *maxValue, _Out_ bool *IsBST, _Out_ int *LargestBSTChildrenCount, _Outptr_result_maybenull_ NODE **LargestBSTSubtreeRoot)
 {
 	bool isLeftBST = true, isRightBST = true;
 	int leftLargestBSTChildrenCount = 0, rightLargestBSTChildrenCount = 0;
-	NODE * leftLargestBSTSubtreeRoot = nullptr, *rightLargestBSTSubtreeRoot = nullptr;
+	NODE *leftLargestBSTSubtreeRoot = nullptr, *rightLargestBSTSubtreeRoot = nullptr;
 	int nodeMinValue, nodeMaxValue;
 
 	if (node == nullptr)
@@ -139,9 +139,9 @@ void FindLargestBSTSubtreeRecursive(_In_ NODE * node, _In_ int* minValue, _In_ i
 	
 }
 
-NODE * FindLargestBSTSubtree(NODE * Root)
+NODE *FindLargestBSTSubtree(NODE *Root)
 {
-	NODE * LargestBSTSubtree = nullptr;
+	NODE *LargestBSTSubtree = nullptr;
 	int largestBSTChildrenCount = 0;
 	bool isBST = false;
 	int minValue = 0, maxValue = 0;
@@ -151,10 +151,10 @@ NODE * FindLargestBSTSubtree(NODE * Root)
 	return LargestBSTSubtree;
 }
 
-NODE * CreateTree1()
+NODE *CreateTree1()
 {
-	NODE * root = new NODE(9);
-	NODE * node6, *node13, *node15;
+	NODE *root = new NODE(9);
+	NODE *node6, *node13, *node15;
 	root->Left = node6 = new NODE(6);
 	root->Right = node13 = new NODE(13);
 
@@ -170,25 +170,25 @@ NODE * CreateTree1()
 	return root;
 }
 
-NODE * CreateTreeWithOnlyRoot()
+NODE *CreateTreeWithOnlyRoot()
 {
 	return new NODE(5);
 }
 
-NODE * CreateTreeWithOnlyLeftChildren()
+NODE *CreateTreeWithOnlyLeftChildren()
 {
-	NODE * node3;
-	NODE * root = new NODE(5);
+	NODE *node3;
+	NODE *root = new NODE(5);
 	root->Left = node3 = new NODE(3);
 	node3->Left = new NODE(2);
 
 	return root;
 }
 
-NODE * CreateTreeWithOnlyRightChildren()
+NODE *CreateTreeWithOnlyRightChildren()
 {
-	NODE * node6;
-	NODE * root = new NODE(5);
+	NODE *node6;
+	NODE *root = new NODE(5);
 	root->Right = node6 = new NODE(6);
 	node6->Right = new NODE(7);
 
@@ -196,10 +196,10 @@ NODE * CreateTreeWithOnlyRightChildren()
 }
 
 //This will return a leaf node since leaves are considered BST of size 1.
-NODE * CreateTreeWithNoBST()
+NODE *CreateTreeWithNoBST()
 {
-	NODE * root = new NODE(9);
-	NODE * node6, *node13, *node15;
+	NODE *root = new NODE(9);
+	NODE *node6, *node13, *node15;
 	root->Left = node6 = new NODE(6);
 	root->Right = node13 = new NODE(13);
 
@@ -215,10 +215,10 @@ NODE * CreateTreeWithNoBST()
 	return root;
 }
 
-NODE * CreateFullTreeAsBST()
+NODE *CreateFullTreeAsBST()
 {
-	NODE * root = new NODE(9);
-	NODE * node6, *node13, *node15;
+	NODE *root = new NODE(9);
+	NODE *node6, *node13, *node15;
 	root->Left = node6 = new NODE(6);
 	root->Right = node13 = new NODE(13);
 
@@ -235,10 +235,10 @@ NODE * CreateFullTreeAsBST()
 }
 
 
-NODE * CreateLargerBSTTreeOnRight()
+NODE *CreateLargerBSTTreeOnRight()
 {
-	NODE * root = new NODE(9);
-	NODE * node10, *node13, *node15;
+	NODE *root = new NODE(9);
+	NODE *node10, *node13, *node15;
 	root->Left = node10 = new NODE(10);
 	root->Right = node13 = new NODE(13);
 
@@ -255,10 +255,10 @@ NODE * CreateLargerBSTTreeOnRight()
 }
 
 
-NODE * CreateLargerBSTTreeOnLeft()
+NODE *CreateLargerBSTTreeOnLeft()
 {
-	NODE * root = new NODE(9);
-	NODE * node6, *node13, *node11, *node5;
+	NODE *root = new NODE(9);
+	NODE *node6, *node13, *node11, *node5;
 	root->Left = node6 = new NODE(6);
 	root->Right = node13 = new NODE(13);
 
@@ -278,10 +278,10 @@ NODE * CreateLargerBSTTreeOnLeft()
 
 
 //algorithm will be pick right BST if there are two BSTs of same size.
-NODE * CreateEqualSizedBSTsOnLeftAndRight()
+NODE *CreateEqualSizedBSTsOnLeftAndRight()
 {
-	NODE * root = new NODE(9);
-	NODE * node6, *node8, *node15;
+	NODE *root = new NODE(9);
+	NODE *node6, *node8, *node15;
 	root->Left = node6 = new NODE(6);
 	root->Right = node8 = new NODE(8); // invalide BST, but children under it are.
 
@@ -300,11 +300,11 @@ NODE * CreateEqualSizedBSTsOnLeftAndRight()
 void TestGivenSample()
 {
 	printf("\nInput tree (Given Sample): \n");
-	NODE * root = CreateTree1();
+	NODE *root = CreateTree1();
 	DisplayTree(root);
 
 	printf("\nLargest BST Subtree tree: \n");
-	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
+	NODE *largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
 
 	_ASSERT(largestBSTSubtree->Value == 13);
@@ -316,7 +316,7 @@ void TestNullRoot()
 	DisplayTree(nullptr);
 
 	printf("\nLargest BST Subtree tree: \n");
-	NODE * largestBSTSubtree = FindLargestBSTSubtree(nullptr);
+	NODE *largestBSTSubtree = FindLargestBSTSubtree(nullptr);
 	DisplayTree(largestBSTSubtree);
 
 	_ASSERT(largestBSTSubtree == nullptr);
@@ -327,11 +327,11 @@ void TestNullRoot()
 void TestTreeWithOnlyRoot()
 {
 	printf("\nInput tree (Only Root): \n");
-	NODE * root = CreateTreeWithOnlyRoot();
+	NODE *root = CreateTreeWithOnlyRoot();
 	DisplayTree(root);
 
 	printf("\nLargest BST Subtree tree: \n");
-	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
+	NODE *largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
 
 	_ASSERT(largestBSTSubtree->Value == 5);
@@ -341,11 +341,11 @@ void TestTreeWithOnlyRoot()
 void TestTreeWithOnlyLeftChildren()
 {
 	printf("\nInput tree (Tree with only Left children): \n");
-	NODE * root = CreateTreeWithOnlyLeftChildren();
+	NODE *root = CreateTreeWithOnlyLeftChildren();
 	DisplayTree(root);
 
 	printf("\nLargest BST Subtree tree: \n");
-	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
+	NODE *largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
 
 	_ASSERT(largestBSTSubtree->Value == 5);
@@ -355,11 +355,11 @@ void TestTreeWithOnlyLeftChildren()
 void TestTreeWithOnlyRightChildren()
 {
 	printf("\nInput tree (Tree with only Right children): \n");
-	NODE * root = CreateTreeWithOnlyRightChildren();
+	NODE *root = CreateTreeWithOnlyRightChildren();
 	DisplayTree(root);
 
 	printf("\nLargest BST Subtree tree: \n");
-	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
+	NODE *largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
 
 	_ASSERT(largestBSTSubtree->Value == 5);
@@ -368,11 +368,11 @@ void TestTreeWithOnlyRightChildren()
 void TestLeafBSTTreeFound()
 {
 	printf("\nInput tree (No BST Subtree, only leaves are BST): \n");
-	NODE * root = CreateTreeWithNoBST();
+	NODE *root = CreateTreeWithNoBST();
 	DisplayTree(root);
 
 	printf("\nLargest BST Subtree tree: \n");
-	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
+	NODE *largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
 
 	_ASSERT(largestBSTSubtree->Value == 20);
@@ -381,11 +381,11 @@ void TestLeafBSTTreeFound()
 void TestFullTreeAsBST()
 {
 	printf("\nInput tree (Full Tree is BST): \n");
-	NODE * root = CreateFullTreeAsBST();
+	NODE *root = CreateFullTreeAsBST();
 	DisplayTree(root);
 
 	printf("\nLargest BST Subtree tree: \n");
-	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
+	NODE *largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
 
 	_ASSERT(largestBSTSubtree->Value == 9);
@@ -394,11 +394,11 @@ void TestFullTreeAsBST()
 void TestLargerBSTTreeOnRight()
 {
 	printf("\nInput tree (Larger BST is on right, left also has a BST): \n");
-	NODE * root = CreateLargerBSTTreeOnRight();
+	NODE *root = CreateLargerBSTTreeOnRight();
 	DisplayTree(root);
 
 	printf("\nLargest BST Subtree tree: \n");
-	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
+	NODE *largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
 
 	_ASSERT(largestBSTSubtree->Value == 13);
@@ -408,11 +408,11 @@ void TestLargerBSTTreeOnRight()
 void TestLargerBSTTreeOnLeft()
 {
 	printf("\nInput tree (Larger BST is on left, right also has a BST): \n");
-	NODE * root = CreateLargerBSTTreeOnLeft();
+	NODE *root = CreateLargerBSTTreeOnLeft();
 	DisplayTree(root);
 
 	printf("\nLargest BST Subtree tree: \n");
-	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
+	NODE *largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
 
 	_ASSERT(largestBSTSubtree->Value == 6);
@@ -423,11 +423,11 @@ void TestLargerBSTTreeOnLeft()
 void TestEqualSizedBSTsOnLeftAndRight()
 {
 	printf("\nInput tree (Left and Right have equal BSTs, returns right): \n");
-	NODE * root = CreateEqualSizedBSTsOnLeftAndRight();
+	NODE *root = CreateEqualSizedBSTsOnLeftAndRight();
 	DisplayTree(root);
 
 	printf("\nLargest BST Subtree tree: \n");
-	NODE * largestBSTSubtree = FindLargestBSTSubtree(root);
+	NODE *largestBSTSubtree = FindLargestBSTSubtree(root);
 	DisplayTree(largestBSTSubtree);
 
 	_ASSERT(largestBSTSubtree->Value == 15);

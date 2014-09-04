@@ -20,7 +20,7 @@ template<typename T>
 struct NODE
 {
 	T Value;
-	NODE * Left, *Right;
+	NODE *Left, *Right;
 
 	NODE(T val) : 
 		Value(val), 
@@ -60,10 +60,10 @@ template<typename T>   // you can use <typename T> or <class T> , they both mean
 class  BST
 {
 private:
-	NODE<T> * Root;
+	NODE<T> *Root;
 
 	//When defining template methods, you have to define them inline.
-	NODE<T>* FindTreeItemImpl(NODE<T>* rootNode, T item)
+	NODE<T>*FindTreeItemImpl(NODE<T>*rootNode, T item)
 	{
 		if (rootNode == nullptr) return rootNode;
 
@@ -76,7 +76,7 @@ private:
 			return FindTreeItemImpl(rootNode->Right, item);
 	}
 
-	void InsertImpl(_Inout_ NODE<T>** node, _In_ T item)   //could use NODE<T>*& instead of NODE<T>** ie. pointer by ref instead of pointer to pointer. No difference, just depends on preference.
+	void InsertImpl(_Inout_ NODE<T>**node, _In_ T item)   //could use NODE<T>*& instead of NODE<T>**ie. pointer by ref instead of pointer to pointer. No difference, just depends on preference.
 	{
 		if (*node == nullptr)
 		{
@@ -92,7 +92,7 @@ private:
 	}
 
 	//By default traverse postorder
-	void DisplayTreeImpl(_In_ NODE<T>* node, _In_ int indent = 0, _In_ char* LR = "") //can specify default values for optional parameters.
+	void DisplayTreeImpl(_In_ NODE<T>*node, _In_ int indent = 0, _In_ char *LR = "") //can specify default values for optional parameters.
 	{
 		
 		//do in-order traversal in reverse to show the tree from left to right (instead of top down) and right (top) to left (bottom). 
@@ -107,7 +107,7 @@ private:
 
 	}
 
-	void DeleteTreeImpl(_In_ NODE<T>* node)
+	void DeleteTreeImpl(_In_ NODE<T>*node)
 	{
 		//post order traversal
 		DeleteTreeImpl(node->Left);
@@ -116,7 +116,7 @@ private:
 	}
 
 
-	bool IsBSTImpl(_In_ NODE<T> * node, T minValue, T maxValue)
+	bool IsBSTImpl(_In_ NODE<T> *node, T minValue, T maxValue)
 	{
 		if (node == nullptr) return true;
 		if (node->Value > maxValue || node->Value < minValue)     //if node violates limits passed down then it is not BST
@@ -130,7 +130,7 @@ private:
 	}
 
 
-	bool IsBSTImplBottomUp(_In_ NODE<T> * node, T & minValue, T & maxValue)
+	bool IsBSTImplBottomUp(_In_ NODE<T> *node, T & minValue, T & maxValue)
 	{
 		if (node == nullptr) return true;
 
@@ -178,7 +178,7 @@ private:
 
 	}
 
-	NODE<T>* FindMin(NODE<T> * node)
+	NODE<T>*FindMin(NODE<T> *node)
 	{
 		while (node->Left)
 		{
@@ -187,7 +187,7 @@ private:
 		return node;
 	}
 
-	void DeleteItemImpl(_Inout_ NODE<T> ** node, T item)
+	void DeleteItemImpl(_Inout_ NODE<T> **node, T item)
 	{
 		if (*node == nullptr) return;
 
@@ -203,7 +203,7 @@ private:
 			if ((*node)->Left && (*node)->Right)
 			{
 				//find min in right subtree or find max in left subtree.
-				NODE<T>* minNodeInRightSubtree = FindMin((*node)->Right);
+				NODE<T>*minNodeInRightSubtree = FindMin((*node)->Right);
 
 				//Replace values 
 				(*node)->Value = minNodeInRightSubtree->Value;
@@ -213,7 +213,7 @@ private:
 			}
 			else 
 			{
-				NODE<T> * temp = *node;
+				NODE<T> *temp = *node;
 				if ((*node)->Left)
 				{
 					//only left child. replace with left child.
@@ -239,7 +239,7 @@ private:
 	}
 	
 
-	void TraverseTreeRecursiveImpl(NODE<T>* node, int traverseOrder)
+	void TraverseTreeRecursiveImpl(NODE<T>*node, int traverseOrder)
 	{
 		switch (traverseOrder)
 		{
@@ -281,7 +281,7 @@ public:
 		InsertImpl(&Root, item);
 	}
 
-	// have to pass in count since when we pass in int[] , it gets converted to int * (and it loses array count info) and _countof does not like int *. Also sizeof loses the information of array count.
+	// have to pass in count since when we pass in int[] , it gets converted to int *(and it loses array count info) and _countof does not like int *. Also sizeof loses the information of array count.
 	void Insert(_In_ T items[], int countOfItems)
 	{
 		for (int i = 0; i < countOfItems; i++)
@@ -311,7 +311,7 @@ public:
 		return IsBSTImplBottomUp(this->Root, minValue, maxValue);
 	}
 
-	NODE<T>* FindTreeItem(T item)
+	NODE<T>*FindTreeItem(T item)
 	{
 		return FindTreeItemImpl(this->Root, item);
 	}
@@ -332,7 +332,7 @@ public:
 	void TraverseTreeWithoutRecursion(_In_ int traverseOrder = InOrder)
 	{
 		stack<NODE<T>*> stack, outputStack;
-		NODE<T> * curr = nullptr;
+		NODE<T> *curr = nullptr;
 
 
 		switch (traverseOrder)
@@ -383,7 +383,7 @@ public:
 			{
 				stack.push(this->Root);
 				curr = this->Root;
-				NODE<T> * prev = nullptr;  //previously traversed node . this helps to know whether you are traversing up or down the tree based on its relation to curr.
+				NODE<T> *prev = nullptr;  //previously traversed node . this helps to know whether you are traversing up or down the tree based on its relation to curr.
 
 				while (!stack.empty())
 				{
@@ -458,10 +458,10 @@ public:
 
 int main()
 {
-	BST<int> * BSTInt = new BST<int>();
+	BST<int> *BSTInt = new BST<int>();
 
 	int items[7] = { 4, 2, 6, 1, 3, 5, 7 };
-	BSTInt->Insert(items, _countof(items)); // have to pass in count since when we pass in int[] , it gets converted to int * and _countof does not like int *
+	BSTInt->Insert(items, _countof(items)); // have to pass in count since when we pass in int[] , it gets converted to int *and _countof does not like int *
 	BSTInt->DisplayTree();
 	printf("\nThe tree is a BST : %s\n\n", BSTInt->IsBST()? "True" : "False");
 	_ASSERT(BSTInt->IsBST());
@@ -475,7 +475,7 @@ int main()
 	printf("\nThe tree is a BST : %s\n\n", BSTInt->IsBST() ? "True" : "False");
 	_ASSERT(BSTInt->IsBST());
 
-	/* The auto keyword is a declaration specifier. However, the C++ standard defines an original and a revised meaning for this keyword.
+	/*The auto keyword is a declaration specifier. However, the C++ standard defines an original and a revised meaning for this keyword.
 	Before Visual C++ 2010, the auto keyword declares a variable in the automatic storage class; that is, a variable that has a local lifetime.
 	Starting with Visual C++ 2010, the auto keyword declares a variable whose type is deduced from the initialization expression in its declaration. The /Zc:auto[-] compiler option controls the meaning of the auto keyword.
 	*/
@@ -529,7 +529,7 @@ int main()
 
 
 	printf("\n\n");
-	BST<char>* BSTChar = new BST<char>();
+	BST<char>*BSTChar = new BST<char>();
 
 	char itemsChar[7] = {'F', 'D', 'J', 'A', 'K', 'E', 'C'};
 	BSTChar->Insert(itemsChar, _countof(itemsChar)); 

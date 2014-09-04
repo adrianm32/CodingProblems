@@ -3,9 +3,9 @@
 typedef struct NODE
 {
 	int value;
-	NODE * next;
+	NODE *next;
 
-	NODE(int val, NODE* node)
+	NODE(int val, NODE *node)
 	{
 		value = val;
 		next = node;
@@ -18,7 +18,7 @@ Josephus problem:
 Josephus style election where group of N people stand in a circle, then count around the circle, eliminating every Mth person, until only one is left who is then the leader.
 */
 
-int main(int* argc, char * argv[])  //argc is count of parameters which is always (1 + count of argv[]) since program name is prepended as argv[0]. So start reading values from argv[1]
+int main(int *argc, char *argv[])  //argc is count of parameters which is always (1 + count of argv[]) since program name is prepended as argv[0]. So start reading values from argv[1]
 {
 	int i, N = atoi(argv[1]), M = atoi(argv[2]);
 

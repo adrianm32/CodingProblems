@@ -58,10 +58,10 @@ int main()
 	a = pow(2,30);
 	b = 2;  //2^32 should overflow
 	if ((INT_MAX / a) <= b)
-		printf("\n%d * %d = %d   (Multiplication Integer overflow, greater than %d)", a, b, a * b, INT_MAX);
+		printf("\n%d *%d = %d   (Multiplication Integer overflow, greater than %d)", a, b, a *b, INT_MAX);
 
 	if ((INT_MAX / a) <= a)
-		printf("\n%d * %d = %d   (Multiplication Integer overflow, greater than %d)", a, b, a * b, INT_MAX);
+		printf("\n%d *%d = %d   (Multiplication Integer overflow, greater than %d)", a, b, a *b, INT_MAX);
 
 
 

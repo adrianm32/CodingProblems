@@ -3,7 +3,7 @@
 using namespace std;
 
 
-bool IsSorted(int * items, int length)
+bool IsSorted(int *items, int length)
 {
 	for (int i = 0; i < length - 1; i++)
 	{
@@ -53,7 +53,7 @@ void DisplayItems(int items[], int length)
 /*
 Compare adjacent elements until the largest ends up on the end.
 */
-void BubbleSort(int * items, int length)
+void BubbleSort(int *items, int length)
 {
 	int len = length;
 	while (len > 1)  //len reduces as elements keep moving to right end.
@@ -99,7 +99,7 @@ void BubbleSort(int * items, int length)
 /*
 keep inserting each element in its rightful place to the left.
 */
-void InsertionSort(int * items, int length)
+void InsertionSort(int *items, int length)
 {
 	int len = length;
 	int temp,j;
@@ -148,7 +148,7 @@ void InsertionSort(int * items, int length)
 /*
 select the ith min element from the unsorted and move it to the sorted list.
 */
-void SelectionSort(int * items, int length)
+void SelectionSort(int *items, int length)
 {
 	int min = INT_MIN;
 	int minPosition = -1;
@@ -199,7 +199,7 @@ void SelectionSort(int * items, int length)
 ************************************************************************/
 
 
-void SomeSort(int * items, int length)
+void SomeSort(int *items, int length)
 {
 	for (int i = 0; i < length - 1; i++)   // one less than j, at end-1
 	{
@@ -246,15 +246,15 @@ void SomeSort(int * items, int length)
 Binary tree layout in array.
 For 1-Based array, :  1 2 3
 Parent =  floor((i / 2)     
-LeftChild = 2 * i;
-RightChild = 2 * i + 1;
+LeftChild = 2 *i;
+RightChild = 2 *i + 1;
 
 
 For 0-Based Array  :   0 1 2
 
 Parent = floor((i-1)/ 2)     eg. (2-1)/ 2 = 0 else it would be 2/2 = 1
-Left Child = 2 * i + 1
-Right child = 2 * i + 2
+Left Child = 2 *i + 1
+Right child = 2 *i + 2
 
 
 
@@ -279,16 +279,16 @@ enum HeapifyBuildOrder
 Pushes parent down to the tree until heap order is restored.
 */
 
-void SiftDown(int * items, int startIndex, int endIndex)
+void SiftDown(int *items, int startIndex, int endIndex)
 {
 	int childIndex, temp;
 	int rootIndex = startIndex;  //start at root of heap.
 
-	while ((2 * rootIndex + 1) <= endIndex)  //while root has at least one child, left child
+	while ((2 *rootIndex + 1) <= endIndex)  //while root has at least one child, left child
 	{
 		int swapIndex = rootIndex;
 
-		childIndex = 2 * rootIndex + 1;
+		childIndex = 2 *rootIndex + 1;
 		if (items[swapIndex] < items[childIndex])  //compare with left child.
 		{
 			swapIndex = childIndex;
@@ -314,7 +314,7 @@ void SiftDown(int * items, int startIndex, int endIndex)
 }
 
 
-void SiftUp(int * items, int startIndex, int endIndex)
+void SiftUp(int *items, int startIndex, int endIndex)
 {
 	int childIndex = endIndex;  //start with bottom most child and sift it up along its parent tree path.
 	int parentIndex, temp;
@@ -378,7 +378,7 @@ void Heapify(int *items, int length, HeapifyBuildOrder heapifyOrder)
 	
 }
 
-void HeapSort(int * items, int length, HeapifyBuildOrder heapifyOrder = BottomUp)
+void HeapSort(int *items, int length, HeapifyBuildOrder heapifyOrder = BottomUp)
 {
 	int temp;
 
@@ -424,7 +424,7 @@ void HeapSort(int * items, int length, HeapifyBuildOrder heapifyOrder = BottomUp
 
 ***************************************************************/
 
-void BinarySearch(int * items, int length, int item)
+void BinarySearch(int *items, int length, int item)
 {
 	int start = 0;
 	int end = length - 1;

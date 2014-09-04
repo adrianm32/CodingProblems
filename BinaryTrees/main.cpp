@@ -7,7 +7,7 @@ using namespace std;
 struct NODE
 {
 	int Value;
-	NODE * pLeft, *pRight;
+	NODE *pLeft, *pRight;
 
 	NODE(int val) :
 		Value(val),
@@ -19,7 +19,7 @@ struct NODE
 
 #pragma region Algorithm 1 
 
-void FindCommonAncestorImpl(_In_ NODE * pNode, _In_opt_ NODE * pN1, _In_opt_ NODE *pN2, _Out_ bool * pFoundN1, _Out_ bool * pFoundN2, _Outptr_ NODE** ppCommonAncestor)
+void FindCommonAncestorImpl(_In_ NODE *pNode, _In_opt_ NODE *pN1, _In_opt_ NODE *pN2, _Inout_ bool *pFoundN1, _Inout_ bool *pFoundN2, _Outptr_result_maybenull_ NODE **ppCommonAncestor)
 {
 	if (pNode == nullptr) return;
 	
@@ -71,10 +71,10 @@ void FindCommonAncestorImpl(_In_ NODE * pNode, _In_opt_ NODE * pN1, _In_opt_ NOD
 }
 
 
-NODE * FindCommonAncestor1(_In_ NODE * pRoot, _In_opt_ NODE * pN1, _In_opt_ NODE *pN2)
+NODE *FindCommonAncestor1(_In_ NODE *pRoot, _In_opt_ NODE *pN1, _In_opt_ NODE *pN2)
 {
 
-	NODE* pCommonAncestor = nullptr;
+	NODE *pCommonAncestor = nullptr;
 	bool bFoundN1 = false, bFoundN2 = false;
 	FindCommonAncestorImpl(pRoot, pN1, pN2, &bFoundN1, &bFoundN2, &pCommonAncestor);
 
@@ -87,7 +87,7 @@ NODE * FindCommonAncestor1(_In_ NODE * pRoot, _In_opt_ NODE * pN1, _In_opt_ NODE
 
 //assumption N1 and N2 are both in the tree. This will traverse all nodes in the tree even if it found the nodes in the left subtree.
 
-NODE* FindCommonAncestor2(_In_ NODE * pRoot, _In_opt_ NODE * pN1, _In_opt_ NODE *pN2)
+NODE *FindCommonAncestor2(_In_ NODE *pRoot, _In_opt_ NODE *pN1, _In_opt_ NODE *pN2)
 {
 	if (pRoot == nullptr || !pN1 || !pN2) 
 	{
@@ -99,9 +99,9 @@ NODE* FindCommonAncestor2(_In_ NODE * pRoot, _In_opt_ NODE * pN1, _In_opt_ NODE 
 		return pRoot;   //return if node matches N1 or N2.
 	}
 
-	NODE* pLeft = FindCommonAncestor2(pRoot->pLeft, pN1, pN2);
+	NODE *pLeft = FindCommonAncestor2(pRoot->pLeft, pN1, pN2);
 
-	NODE* pRight = FindCommonAncestor2(pRoot->pRight, pN1, pN2);
+	NODE *pRight = FindCommonAncestor2(pRoot->pRight, pN1, pN2);
 
 	if (pLeft && pRight)  // if both left and right subtrees return something (N1 or N2), then this node must be common ancestor
 	{
@@ -114,11 +114,11 @@ NODE* FindCommonAncestor2(_In_ NODE * pRoot, _In_opt_ NODE * pN1, _In_opt_ NODE 
 #pragma endregion
 
 
-typedef NODE* (*FindCommonAncestor) (_In_ NODE * pRoot, _In_opt_ NODE * pN1, _In_opt_ NODE *pN2);
+typedef NODE *(*FindCommonAncestor) (_In_ NODE *pRoot, _In_opt_ NODE *pN1, _In_opt_ NODE *pN2);
 void TestCommonAncestor(FindCommonAncestor func)
 {
-	NODE * pRoot = new NODE(9);
-	NODE * pNode6, *pNode13, *pNode15 , *pNode5, *pNode11, *pNode12, *pNode14, *pNode20;
+	NODE *pRoot = new NODE(9);
+	NODE *pNode6, *pNode13, *pNode15 , *pNode5, *pNode11, *pNode12, *pNode14, *pNode20;
 	pRoot->pLeft = pNode6 = new NODE(6);
 	pRoot->pRight = pNode13 = new NODE(13);
 
@@ -158,7 +158,7 @@ void TestCommonAncestor(FindCommonAncestor func)
 	pCommonAncestor = func(nullptr, pNode5, pNode6);  //Root is null
 	_ASSERT(!pCommonAncestor);
 
-	NODE * pTemp = new NODE(5);
+	NODE *pTemp = new NODE(5);
 	pCommonAncestor = func(pRoot, pTemp, pTemp);  //node not in tree.
 	_ASSERT(!pCommonAncestor);
 

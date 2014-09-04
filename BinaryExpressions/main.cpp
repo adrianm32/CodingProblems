@@ -20,7 +20,7 @@ typedef struct NODE
 	void DisplayValue();
 	void DisplayInfix();
 
-	NODE* Left, *Right;
+	NODE *Left, *Right;
 
 	NODE() : Left(nullptr), Right(nullptr)
 	{}
@@ -67,7 +67,7 @@ int NODE::Value()
 			case '-':
 				return Left->Value() - Right->Value();
 			case '*':
-				return Left->Value() * Right->Value();
+				return Left->Value() *Right->Value();
 			case '/':
 				return Left->Value() / Right->Value();
 			default:
@@ -94,8 +94,8 @@ _Check_return_ bool HasHigherPrecedence(_In_ char op1, _In_ char op2)
 }
 
 
-// 1 + 2 * 3 + 5   =>  1 2 3 * 5 + +
-void InfixToPostfix(_In_z_ char * infix, _Out_ char * postfix)
+// 1 + 2 *3 + 5   =>  1 2 3 *5 + +
+void InfixToPostfix(_In_z_ char *infix, _Out_ char *postfix)
 {
 	stack<char> opStack;
 	bool addspace = false;
@@ -162,12 +162,12 @@ void InfixToPostfix(_In_z_ char * infix, _Out_ char * postfix)
 }
 
 
-_Maybenull_ NODE* PostfixToTree(_In_ std::string postfix)
+_Maybenull_ NODE *PostfixToTree(_In_ std::string postfix)
 {
 	istringstream istr(postfix);
 	char token;
 
-	stack<NODE*> stack;
+	stack<NODE *> stack;
 	NODE *node = nullptr;
 
 	while (istr >> token)    //this will pop one char at a time from the stream
@@ -221,7 +221,7 @@ enum TraverseOrder
 	PostOrder
 } ;
 
-void TraverseTree(_In_opt_ NODE* node, _In_ TraverseOrder traverseOrder)
+void TraverseTree(_In_opt_ NODE *node, _In_ TraverseOrder traverseOrder)
 {
 	switch (traverseOrder)
 	{
@@ -306,7 +306,7 @@ int EvaluatePostfix(_In_ string postfix)
 			{
 						right = stack.top(); stack.pop();
 						left = stack.top(); stack.pop();
-						stack.push(left * right);
+						stack.push(left *right);
 
 			}
 				break;
@@ -346,15 +346,15 @@ int EvaluatePostfix(_In_ string postfix)
 
 
 /*
-// 1 + ( 2 * 3)  =>        + 1 * 2 3
-// 1 + 2 * 3 + 5 =>   + 1 + * 2 3 5
+// 1 + ( 2 *3)  =>        + 1 *2 3
+// 1 + 2 *3 + 5 =>   + 1 + *2 3 5
 //http://www.slideshare.net/khateeb321/infix-to-prefix
 
 start from reverse end of string moving backwards.
 
 */
 
-void InfixToPrefix(_In_z_ char * infix, _Out_ char * prefix)
+void InfixToPrefix(_In_z_ char *infix, _Out_ char *prefix)
 {
 
 	stack<char> prefixStack, operatorStack;
@@ -430,9 +430,9 @@ int main()
 {
 
 	char postfix [_MAX_PATH], prefix[_MAX_PATH];
-	NODE* Root = nullptr;
+	NODE *Root = nullptr;
 
-	char * infix = "1+(23*10)/5";
+	char *infix = "1+(23*10)/5";
 
 	InfixToPostfix(infix, postfix);
 	Root = PostfixToTree(postfix);
@@ -441,19 +441,19 @@ int main()
 	printf("\nBack to Infix: ");
 	Root->DisplayInfix();
 
-	InfixToPostfix("1 + 2 * 3 + 5", postfix);
+	InfixToPostfix("1 + 2 *3 + 5", postfix);
 	Root = PostfixToTree(postfix);
-	printf("\n(Infix) %s  => (Postfix) %s \n", "1 + 2 * 3 + 5", postfix);
+	printf("\n(Infix) %s  => (Postfix) %s \n", "1 + 2 *3 + 5", postfix);
 	printf("\nBack to Infix: ");
 	Root->DisplayInfix();
 	
 
 
-	InfixToPrefix("1 + 2 * 3 + 5", prefix);
-	printf("\n(Infix) %s  => (Prefix) %s \n", "1 + 2 * 3 + 5", prefix);
+	InfixToPrefix("1 + 2 *3 + 5", prefix);
+	printf("\n(Infix) %s  => (Prefix) %s \n", "1 + 2 *3 + 5", prefix);
 
-	InfixToPrefix("1 + (2 * 3) + 5", prefix);
-	printf("\n(Infix) %s  => (Prefix) %s \n", "1 + (2 * 3) + 5", prefix);
+	InfixToPrefix("1 + (2 *3) + 5", prefix);
+	printf("\n(Infix) %s  => (Prefix) %s \n", "1 + (2 *3) + 5", prefix);
 
 
 

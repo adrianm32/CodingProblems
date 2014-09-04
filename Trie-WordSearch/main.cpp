@@ -11,7 +11,7 @@ private :
 	unsigned int IsWordBitFlag; 
 
 public:
-	NODE* Next[26];
+	NODE *Next[26];
 
 	NODE()
 	{
@@ -23,18 +23,18 @@ public:
 
 	bool IsWordBitFlagSet(int bitPosition)
 	{
-		return (IsWordBitFlag &= (1 << (sizeof(int)* 8 - 1)) >> bitPosition);
+		return (IsWordBitFlag &= (1 << (sizeof(int)*8 - 1)) >> bitPosition);
 
 	}
 
 	void SetWordBitFlag(int bitPosition)
 	{
-		IsWordBitFlag |= (1 << (sizeof(int)* 8 - 1)) >> bitPosition;
+		IsWordBitFlag |= (1 << (sizeof(int)*8 - 1)) >> bitPosition;
 	}
 
 	void UnsetWordBitFlag(int bitPosition)
 	{
-		IsWordBitFlag &= ~((1 << (sizeof(int)* 8 - 1)) >> bitPosition);
+		IsWordBitFlag &= ~((1 << (sizeof(int)*8 - 1)) >> bitPosition);
 	}
 
 	bool HasChildren()
@@ -54,7 +54,7 @@ public:
 struct Visitor
 {
 public:
-	virtual void Visit(NODE * pNode) = 0;
+	virtual void Visit(NODE *pNode) = 0;
 
 };
 
@@ -65,7 +65,7 @@ private:
 public:
 	stack<NODE *> stack;
 
-	void Visit(NODE * pNode) override
+	void Visit(NODE *pNode) override
 	{
 		stack.push(pNode);
 	}
@@ -76,16 +76,16 @@ public:
 class Trie
 {
 private:
-	NODE* Root;
+	NODE *Root;
 
 public:
 	Trie() : Root(nullptr) {}
-	void Insert(_In_ char* pWord);
-	bool IsWord(_In_ char* pWord, _In_opt_ Visitor * pVisitor = nullptr);
-	void DeleteWord(_In_ char * pWord);
+	void Insert(_In_ char *pWord);
+	bool IsWord(_In_ char *pWord, _In_opt_ Visitor *pVisitor = nullptr);
+	void DeleteWord(_In_ char *pWord);
 };
 
-bool IsWordValid(_In_ char * pWord)
+bool IsWordValid(_In_ char *pWord)
 {
 	//could also use isAlpha from ctype.h
 	if (!pWord) return false;
@@ -101,10 +101,10 @@ bool IsWordValid(_In_ char * pWord)
 	return true;
 }
 
-void Trie::Insert(_In_ char* pWord)
+void Trie::Insert(_In_ char *pWord)
 {
-	NODE * pCurr = this->Root;  //set curr to Root
-	NODE * temp = nullptr;
+	NODE *pCurr = this->Root;  //set curr to Root
+	NODE *temp = nullptr;
 	
 	if (!pWord || *pWord == '\0') return;
 
@@ -134,9 +134,9 @@ void Trie::Insert(_In_ char* pWord)
 
 }
 
-bool Trie::IsWord(_In_ char* pWord, _In_opt_ Visitor * pVisitor)
+bool Trie::IsWord(_In_ char *pWord, _In_opt_ Visitor *pVisitor)
 {
-	NODE* pCurr = this->Root;
+	NODE *pCurr = this->Root;
 	if (pVisitor)
 	{
 		pVisitor->Visit(pCurr);
@@ -166,7 +166,7 @@ bool Trie::IsWord(_In_ char* pWord, _In_opt_ Visitor * pVisitor)
 	return pCurr->IsWordBitFlagSet(prefix);
 }
 
-void Trie::DeleteWord(_In_ char * pWord)
+void Trie::DeleteWord(_In_ char *pWord)
 {
 	DeleteVisitor visitor;
 	if (!IsWord(pWord, &visitor))
@@ -176,7 +176,7 @@ void Trie::DeleteWord(_In_ char * pWord)
 
 	stack<NODE *> stack = visitor.stack;
 
-	NODE * pCurr = stack.top(); stack.pop();
+	NODE *pCurr = stack.top(); stack.pop();
 
 	int length = strlen(pWord);
 	pCurr->UnsetWordBitFlag(pWord[length - 1] - 'a');
@@ -204,7 +204,7 @@ void Trie::DeleteWord(_In_ char * pWord)
 
 void TestInsert()
 {
-	Trie* trie = new Trie();
+	Trie *trie = new Trie();
 
 	trie->Insert("Adrian");
 	trie->Insert("Apple");
@@ -229,7 +229,7 @@ void TestInsert()
 
 void TestDelete()
 {
-	Trie* trie = new Trie();
+	Trie *trie = new Trie();
 
 	trie->Insert("Adrian");
 	trie->Insert("Apple");

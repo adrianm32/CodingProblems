@@ -9,7 +9,7 @@ worst case (brute force) is 64
 
 */
 
-int * Queens; //solution array Queens[row]=col. Each value in the array is the column number of the ith row Queen. eg. Queens[4] = 5 is Queen at (4,5).
+int *Queens; //solution array Queens[row]=col. Each value in the array is the column number of the ith row Queen. eg. Queens[4] = 5 is Queen at (4,5).
 int solutionCount;
 
 void DisplaySolution(_In_ int columns)
@@ -57,7 +57,7 @@ _Check_return_ bool CanPlaceQueen(_In_ int currQueen, _In_ int column)
     return true;
 }
 
-void NQueens(_In_ int currQueen /* current queen */, _In_ int columns /* number of columns */)
+void NQueens(_In_ int currQueen /*current queen */, _In_ int columns /*number of columns */)
 {
     for (int column = 1; column <= columns; column++) //1-based , iterate through all columns for current Queen. 
     {
@@ -85,7 +85,7 @@ struct QueenPosition
     {}
 };
 
-void NQueensWithoutRecursion(_In_ int columns /* number of columns */)
+void NQueensWithoutRecursion(_In_ int columns /*number of columns */)
 {
     std::stack<QueenPosition> QStack;
     int currQueen;

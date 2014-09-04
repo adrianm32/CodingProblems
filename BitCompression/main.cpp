@@ -22,18 +22,18 @@ will conflict with '\0' which is also 0.
 _Out_ pCompressedLength  : Need otuput length to know when last byte of encoded byte is a valid 0 byte compared to final '\0' byte. 
 ****************/
 
-void Bits8To5Compression(_In_ char * pszInput, _Outptr_opt_ char ** ppszCompressedOutput, _Out_ int * pCompressedLength)
+void Bits8To5Compression(_In_ char *pszInput, _Outptr_opt_ char **ppszCompressedOutput, _Out_ int *pCompressedLength)
 {
 
 	int inputLen = strnlen_s(pszInput, _MAX_PATH);
 
-	//int compressedBits = inputLen * 5;
+	//int compressedBits = inputLen *5;
 	//int compressedOutputLen1 = compressedBits / 8 + (((compressedBits % 8) == 0) ? 0 : 1);
 	
-	int compressedOutputLen = (inputLen % 8) == 0 ? (inputLen * 5 / 8) :(inputLen * 5 / 8 + 1);
+	int compressedOutputLen = (inputLen % 8) == 0 ? (inputLen *5 / 8) :(inputLen *5 / 8 + 1);
 	compressedOutputLen += 1; // for adding '\0' at end.
 
-	char * pCompressedOutput = new char[compressedOutputLen]; //create storage for the compressed string.
+	char *pCompressedOutput = new char[compressedOutputLen]; //create storage for the compressed string.
 
 	for (int i = 0; i < compressedOutputLen; i++)
 	{
@@ -88,12 +88,12 @@ void Bits8To5Compression(_In_ char * pszInput, _Outptr_opt_ char ** ppszCompress
 
 _In_ compressedLength  : Need compressed length to know when last byte of encoded byte is a valid 0 byte compared to final '\0' byte.
 **********************/
-void Bits5to8Decompression(_In_ char * pszCompressedInput, _In_ int compressedLength, _Outptr_ char ** ppszDecompressedOutput, _Out_ int * pDecompressedLength)
+void Bits5to8Decompression(_In_ char *pszCompressedInput, _In_ int compressedLength, _Outptr_ char **ppszDecompressedOutput, _Out_ int *pDecompressedLength)
 {
-	int decompressedOutputLen = compressedLength * 8 / 5;
+	int decompressedOutputLen = compressedLength *8 / 5;
 	decompressedOutputLen += 1; // for adding '\0' at end.
 
-	char * pDecompressedOutput = new char[decompressedOutputLen];
+	char *pDecompressedOutput = new char[decompressedOutputLen];
 
 	for (int i = 0; i < decompressedOutputLen; i++)
 	{
@@ -145,18 +145,18 @@ void Bits5to8Decompression(_In_ char * pszCompressedInput, _In_ int compressedLe
 }
 
 
-void Test(char * pInput)
+void Test(char *pInput)
 {
 	int len = strnlen_s(pInput, _MAX_PATH);
 	printf_s("Input String: %s,  Len: %d, Size:%d\n", pInput, len, len + 1);
 
 
 
-	char * pCompressedOutput = nullptr;
+	char *pCompressedOutput = nullptr;
 	int compressedLength = 0;
 	Bits8To5Compression(pInput, &pCompressedOutput, &compressedLength);
 	printf_s("Compressed String: %s, Len: %d, Size: %d\n", pCompressedOutput, strnlen_s(pCompressedOutput, _MAX_PATH), compressedLength + 1);
-	char * pDecompressedOutput = nullptr;
+	char *pDecompressedOutput = nullptr;
 	int decompressedLength = 0;
 	Bits5to8Decompression(pCompressedOutput, compressedLength, &pDecompressedOutput, &decompressedLength);
 	printf_s("DeCompressed String: %s, Len: %d, Size: %d\n", pDecompressedOutput, strnlen_s(pDecompressedOutput, _MAX_PATH), decompressedLength + 1);

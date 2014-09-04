@@ -4,7 +4,7 @@
 using namespace std;
 
 
-void TowersOfHanoi(int n, char x /*start tower*/, char y /*final tower */, char z /*intermediate tower*/, int indent)
+void TowersOfHanoi(int n, char x /*start tower */, char y /*final tower */, char z /*intermediate tower */, int indent)
 {
 	if (n == 0) return;
 
@@ -24,7 +24,7 @@ struct ToH
 	{}
 };
 
-void TowersOfHanoiWithoutRecursion(int n, char x /*start tower*/, char y /*final tower */, char z /*intermediate tower*/)
+void TowersOfHanoiWithoutRecursion(int n, char x /*start tower */, char y /*final tower */, char z /*intermediate tower */)
 {
 	stack<ToH> stack;
 	ToH toh(0, ' ', ' ', ' ');

@@ -3,8 +3,8 @@
 typedef struct NODE
 {
 	int value;
-	NODE *  next = nullptr;
-	NODE * prev = nullptr;
+	NODE * next = nullptr;
+	NODE *prev = nullptr;
 
 	NODE(int val)
 	{
@@ -13,13 +13,13 @@ typedef struct NODE
 } NODEITEM;
 
 
-void CreateList(_In_ int count, _Outptr_ NODE ** Head, _Outptr_  NODE ** Tail)
+void CreateList(_In_ int count, _Outptr_ NODE **Head, _Outptr_  NODE **Tail)
 {
 	if (count == 0) *Head = *Tail = nullptr;
 
 	*Head = *Tail = new NODE(0);
 
-	NODE * Curr = *Head;
+	NODE *Curr = *Head;
 
 	for (int i = 1; i < count; i++)
 	{
@@ -31,9 +31,9 @@ void CreateList(_In_ int count, _Outptr_ NODE ** Head, _Outptr_  NODE ** Tail)
 
 }
 
-void DisplayList(NODE* Head, NODE * Tail)
+void DisplayList(NODE *Head, NODE *Tail)
 {
-	NODE * t = Head;
+	NODE *t = Head;
 	printf("Head->");
 	while (t != nullptr)
 	{
@@ -53,11 +53,11 @@ void DisplayList(NODE* Head, NODE * Tail)
 }
 
 
-void ReverseDoublyLinkedList(_Inout_ NODE** Head, _Inout_ NODE ** Tail)
+void ReverseDoublyLinkedList(_Inout_ NODE **Head, _Inout_ NODE **Tail)
 {
-	NODE * prevNode = nullptr;
-	NODE * currNode = *Head;
-	NODE * nextNode = currNode->next;
+	NODE *prevNode = nullptr;
+	NODE *currNode = *Head;
+	NODE *nextNode = currNode->next;
 
 	*Tail = *Head; //set tail to head here itself. Head will be set at end of loop.
 
@@ -81,7 +81,7 @@ void ReverseDoublyLinkedList(_Inout_ NODE** Head, _Inout_ NODE ** Tail)
 
 int main()
 {
-	NODE * Head, *Tail;
+	NODE *Head, *Tail;
 
 	CreateList(10, &Head, &Tail);
 	DisplayList(Head, Tail);

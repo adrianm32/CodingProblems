@@ -43,7 +43,7 @@ bool CheckForIntegerOverflowAddition(int a, int b)
 
 }
 
-HRESULT AtoI(_In_ char* buff, _Out_ int& num)   //passing by ref
+HRESULT AtoI(_In_ char *buff, _Out_ int& num)   //passing by ref
 {
 	bool isNegative = false;
 	int result = 0;
@@ -84,8 +84,8 @@ HRESULT AtoI(_In_ char* buff, _Out_ int& num)   //passing by ref
 	{
 		if (!isValidNumber(*buff)) return E_FAIL;
 
-		if (result > 0 && CheckForIntegerOverflowMultiplication(result, 10) || CheckForIntegerOverflowAddition(result * 10, (*buff - '0'))) { printf("\n Integer Overflow");  return E_FAIL; }
-		result = result * 10 + (*buff - '0');
+		if (result > 0 && CheckForIntegerOverflowMultiplication(result, 10) || CheckForIntegerOverflowAddition(result *10, (*buff - '0'))) { printf("\n Integer Overflow");  return E_FAIL; }
+		result = result *10 + (*buff - '0');
 
 		buff++;
 
@@ -102,7 +102,7 @@ HRESULT AtoI(_In_ char* buff, _Out_ int& num)   //passing by ref
 
 
 //In place change and update buff pointer.  Else will have to calculate lenght of int or will have to use stack to pop digits in reverse.
-HRESULT IToA(_In_ int num, _In_range_(12, _MAX_PATH)  int buffLen, _Inout_z_count_(buffLen) char ** buff)
+HRESULT IToA(_In_ int num, _In_range_(12, _MAX_PATH)  int buffLen, _Inout_z_count_(buffLen) char **buff)
 {
 	bool isNegative = false;
 	bool isOverflowing = false;
@@ -153,7 +153,7 @@ HRESULT IToA(_In_ int num, _In_range_(12, _MAX_PATH)  int buffLen, _Inout_z_coun
 }
 
 
-char *  IToA2(_Inout_z_count_(12) char * pBuff, _In_ int num)
+char * IToA2(_Inout_z_count_(12) char *pBuff, _In_ int num)
 {
 	bool isNegative = num < 0;
 
@@ -181,7 +181,7 @@ char *  IToA2(_Inout_z_count_(12) char * pBuff, _In_ int num)
 	return pBuff;
 }
 
-void TestAToI(_In_ char * pStr)
+void TestAToI(_In_ char *pStr)
 {
 	int num;
 
@@ -198,7 +198,7 @@ void TestIToA(_In_ int num, _In_opt_ bool flag = false)
 {
 	char buff[12] = {};  //INT_MAX has 10 characters + 1 more for sign + 1 for '\0' = 12 characters max is needed for buffer size.
 
-	char * pBuff = buff;
+	char *pBuff = buff;
 
 	if (!flag)
 	{
