@@ -114,7 +114,7 @@ NODE *FindCommonAncestor2(_In_ NODE *pRoot, _In_opt_ NODE *pN1, _In_opt_ NODE *p
 #pragma endregion
 
 
-typedef NODE *(*FindCommonAncestor) (_In_ NODE *pRoot, _In_opt_ NODE *pN1, _In_opt_ NODE *pN2);
+typedef NODE *(*FindCommonAncestor) (_In_opt_ NODE *pRoot, _In_opt_ NODE *pN1, _In_opt_ NODE *pN2);
 void TestCommonAncestor(FindCommonAncestor func)
 {
 	NODE *pRoot = new NODE(9);

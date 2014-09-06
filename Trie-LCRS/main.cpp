@@ -187,17 +187,20 @@ void Trie::DeleteWord(_In_ char *pStr)
 
 		ppPrevChild = ppChild = &(pParent->Child);
 
+#pragma warning(suppress: 6011) //ppChild cannot be null since every node has a Child pointer defined.
 		while (*ppChild != pCurr)
 		{
 			ppPrevChild = ppChild;
+#pragma warning(suppress: 6011)  // *ppChild cannot be null because we have traversed this path to find if it was a valid word.
 			ppChild = &((*ppChild)->Sibling);
-
 		}
 
 		//at this point ppChild is pointing to node to be deleted.
-		*ppPrevChild = (*ppChild)->Sibling;
+#pragma warning(suppress: 6011) //ppPrevChild cannot be null since every node has a Child and sibling pointer defined.
+			*ppPrevChild = (*ppChild)->Sibling;
 		delete(pCurr);
 
+#pragma warning(suppress: 28182) //pParent cannot be null because only non-null nodes get added to the stack.
 		if (pParent->Child || pParent->bIsWord)
 		{
 			break;  //the parent node has other children so we break the loop here.
@@ -354,7 +357,7 @@ void Trie::EditsImpl(_In_opt_ NODE *pTrieRoot, _In_ char *pWord, _In_ list<char 
 		}
 
 		//Insertion and  substitution
-		NODE *pCurr = pTrieRoot->Child;
+		NODE *pCurr = (pTrieRoot != nullptr) ? pTrieRoot->Child : nullptr;
 		while (pCurr)
 		{
 			//Insertion
@@ -380,7 +383,7 @@ void Trie::EditsImpl(_In_opt_ NODE *pTrieRoot, _In_ char *pWord, _In_ list<char 
 	// no edits have been made at this point. Advance to next char.
 	if (nWordLen >= 1)
 	{
-		NODE *pCurr = pTrieRoot->Child;
+		NODE *pCurr = (pTrieRoot != nullptr) ? pTrieRoot->Child : nullptr;
 		while (pCurr && pCurr->Key != *pWord)
 		{
 			pCurr = pCurr->Sibling;
@@ -440,7 +443,7 @@ void Trie::T9Impl(_In_opt_ NODE *pTrieRoot, _In_ char *pT9, _In_ list<char *> *p
 
 	for (int i = 0; i < length; i++)
 	{
-		NODE *pCurr = pTrieRoot->Child;
+		NODE *pCurr = (pTrieRoot != nullptr) ? pTrieRoot->Child : nullptr;
 
 		while (pCurr && pCurr->Key != pDigitToChars[i])
 		{
