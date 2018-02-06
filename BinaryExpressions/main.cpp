@@ -86,11 +86,11 @@ int NODE::Value()
 
 _Check_return_ bool HasHigherPrecedence(_In_ char op1, _In_ char op2)
 {
-	std::string operators = "(+-*/";
+	std::string operators = "+-*/";
 
-	int precedence[] = {0 /*(*/, 1 /*+*/, 1 /*-*/, 2 /***/, 2 /*/*/};
+	int precedence[] = { 1 /*+*/, 1 /*-*/, 2 /***/, 2 /*/*/};
 
-	return precedence[operators.find(op1)] >= precedence[operators.find(op2)];
+	return precedence[operators.find(op1)] > precedence[operators.find(op2)];
 }
 
 
@@ -104,8 +104,9 @@ void InfixToPostfix(_In_z_ char *infix, _Out_ char *postfix)
 	{
 		switch (*infix)
 		{
-		case '(':   
-			break;  //skip '('
+		case '(':  
+			opStack.push(*infix);
+			break;
 			
 		case '+':
 		case '-':
@@ -114,7 +115,7 @@ void InfixToPostfix(_In_z_ char *infix, _Out_ char *postfix)
 			{
 
 				//check for precedence. Can push onto stack only if higher precedece than topmost operator of stack.
-				while (!opStack.empty() && HasHigherPrecedence(opStack.top(), *infix))
+				while (!opStack.empty() && opStack.top() != '(' && HasHigherPrecedence(opStack.top(), *infix))
 				{
 					*postfix++ = ' ';
 					*postfix++ = opStack.top(); opStack.pop();
@@ -125,14 +126,20 @@ void InfixToPostfix(_In_z_ char *infix, _Out_ char *postfix)
 			}
 			break;
 
-		case ')':    // on ')' pop operator from stack
+		case ')':    // on ')' pop operators from stack until '('
 			{
+				while (opStack.top() != '(')
+				{
 					*postfix++ = ' ';
 					*postfix++ = opStack.top(); opStack.pop();
+				}
+
+				// remove the '(' from the stack.
+				opStack.pop();
 			}
 			break;
 
-		default:   //keep adding numbers to postfix unless you see ) in which case you pop operator
+		default:   //keep adding numbers to postfix.
 			{
 				if (addspace)
 				{
@@ -372,7 +379,7 @@ void InfixToPrefix(_In_z_ char *infix, _Out_ char *prefix)
 			case '/':
 			{
 						//check of precedence. cannot add operator on top of higher precedence operator.
-						while (!operatorStack.empty() && HasHigherPrecedence(operatorStack.top(), infix[i]))
+						while (!operatorStack.empty() && operatorStack.top() != ')' && HasHigherPrecedence(operatorStack.top(), infix[i]))
 						{
 							prefixStack.push(operatorStack.top());  //transfer operator from operator stack to prefix stack.
 							operatorStack.pop();
@@ -382,13 +389,19 @@ void InfixToPrefix(_In_z_ char *infix, _Out_ char *prefix)
 				break;
 			case '(':
 			{
-
-						prefixStack.push(operatorStack.top());  //transfer operator from operator stack to prefix stack.
+						while (operatorStack.top() != ')')
+						{
+							prefixStack.push(operatorStack.top());  //transfer operator from operator stack to prefix stack.
+							operatorStack.pop();
+						}
+						
+						// remove ')'
 						operatorStack.pop();
 			}
 				
 				break;
-			case ')': // ignore
+			case ')':
+				operatorStack.push(infix[i]);
 				break;
 			default:  // number;
 				{
@@ -432,7 +445,8 @@ int main()
 	char postfix [_MAX_PATH], prefix[_MAX_PATH];
 	NODE *Root = nullptr;
 
-	char *infix = "1+(23*10)/5";
+	//char *infix = "1+(23*10)/5";
+	char *infix = "((1+2)*(4+5)/(3-2)+2*3)+5";
 
 	InfixToPostfix(infix, postfix);
 	Root = PostfixToTree(postfix);
@@ -447,15 +461,12 @@ int main()
 	printf("\nBack to Infix: ");
 	Root->DisplayInfix();
 	
-
-
 	InfixToPrefix("1 + 2 *3 + 5", prefix);
 	printf("\n(Infix) %s  => (Prefix) %s \n", "1 + 2 *3 + 5", prefix);
 
-	InfixToPrefix("1 + (2 *3) + 5", prefix);
-	printf("\n(Infix) %s  => (Prefix) %s \n", "1 + (2 *3) + 5", prefix);
-
-
+	char *infix3 = "((A+B)*(C+D)/(E-F))+G";
+	InfixToPrefix(infix3, prefix);
+	printf("\n(Infix) %s  => (Prefix) %s \n", infix3, prefix);
 
 	int n;
 	cin >> n;
