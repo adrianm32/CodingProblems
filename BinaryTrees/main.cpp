@@ -23,6 +23,7 @@ void FindCommonAncestorImpl(_In_ NODE *pNode, _In_opt_ NODE *pN1, _In_opt_ NODE 
 {
 	if (pNode == nullptr) return;
 	
+	//keep track of state before entering this node.
 	bool bFoundN1 = *pFoundN1, bFoundN2 = *pFoundN2;
 	if (pN1 == pNode)
 	{
@@ -41,16 +42,12 @@ void FindCommonAncestorImpl(_In_ NODE *pNode, _In_opt_ NODE *pN1, _In_opt_ NODE 
 		return;
 	}
 
-
 	//Search left
 	FindCommonAncestorImpl(pNode->pLeft, pN1, pN2, pFoundN1, pFoundN2, ppCommonAncestor);
 	if (*ppCommonAncestor)
 	{
 		return;  //terminate search if common ancestor already found in left subtree.
 	}
-	bool bLeftFoundN1 = *pFoundN1;
-	bool bLeftFoundN2 = *pFoundN2;
-
 
 	//search right
 	FindCommonAncestorImpl(pNode->pRight, pN1, pN2, pFoundN1, pFoundN2, ppCommonAncestor);
@@ -58,15 +55,11 @@ void FindCommonAncestorImpl(_In_ NODE *pNode, _In_opt_ NODE *pN1, _In_opt_ NODE 
 	{
 		return; //terminate search if common ancestor already found in right subtree.
 	}
-	bool bRightFoundN1 = *pFoundN1;
-	bool bRightFoundN2 = *pFoundN2;
-
 	
-	// N1 and N2 are now found in either left or right subtree, and either one or both were not found when we visited this node earlier.
+	// N1 and N2 are now found in either left or right subtree, and  both were not found when we entered this node.
 	if (!bFoundN1 && !bFoundN2 && *pFoundN1 && *pFoundN2)
 	{
 		*ppCommonAncestor = pNode;
-
 	}
 }
 
