@@ -1,0 +1,332 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build 8Queens",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/8Queens"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build AtoI",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/AtoI"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build BinaryExpressions",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/BinaryExpressions"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build BinaryTrees",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/BinaryTrees"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build BitCompression",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/BitCompression"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build BST",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/BST"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build CircularList",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/CircularList"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build DivisionWithoutDivisorOperator",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/DivisionWithoutDivisorOperator"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build DoublyLinkedList",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/DoublyLinkedList"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build HuffmanEncoding",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/HuffmanEncoding"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build IntegerOverflow",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/IntegerOverflow"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build LargestBSTSubtree",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/LargestBSTSubtree"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build LinkedList",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/LinkedList"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build Replace",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/Replace"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build Sorting",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/Sorting"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build Strings",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/Strings"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build TowersOfHanoi",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/TowersOfHanoi"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build Trie-LCRS",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/Trie-LCRS"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "build Trie-WordSearch",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "main.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/Trie-WordSearch"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "type": "cppbuild",
+            "label": "C/C++: cl.exe build active file",
+            "command": "cl.exe",
+            "args": [
+                "/Zi",
+                "/EHsc",
+                "/nologo",
+                "/Fe${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "${file}"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Task generated by Debugger."
+        }
+    ]
+}
